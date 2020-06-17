@@ -6,10 +6,10 @@ public class queue
     
     public queue()
     {
+        System.out.println("10 people added to queue");
         addFirstPerson(); //adds the first person, that people can follow
         addQueuers(10); //add followers to first person
-        printQueue(first); //prints out the id's of people in queue
-        
+        printQueue(head); //prints out the id's of people in queue, from head
     }
     
     void addFirstPerson(){
@@ -28,8 +28,7 @@ public class queue
     }
     
     void leaveQueue(){
-        //head.follower() = head; //I need to create method to return follower
-        //github test
+        head = head.follower(); //I need to create method to return follower
     }
     
     void printQueue(person t){
