@@ -28,10 +28,10 @@ public class queue
     }
     
     void leaveQueue(){
-        head = head.follower(); //I need to create method to return follower
+        head = head.follower(); //Sets the second person in queue as the head of the queue
     }
     
-    void printQueue(person t){
+    void printQueue(person t){ //prints out queue
         System.out.println("The queue consists of:");
         while (t != null){
             System.out.println(t.myId());
