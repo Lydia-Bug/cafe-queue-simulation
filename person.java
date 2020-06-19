@@ -3,8 +3,10 @@ public class person
 {
   private person follower; //variable for person following person
   private int id; //identifier to use for testing
-  public person(int id){ //creates a new person object 
+  private boolean student; //teacher or students? if true: student
+  public person(int id, boolean student){ //creates a new person object 
       this.id = id;
+      this.student = student;
   }
   public void addfollower(person follower){ //adds follower
       this.follower = follower;
@@ -15,4 +17,7 @@ public class person
   public int myId(){ //returns id
       return id;
   }
+  public boolean myRole(){
+      return student;
+   }
 }
