@@ -1,3 +1,5 @@
+
+
 public class queue
 {
     person first; //first person to join queue
@@ -6,10 +8,13 @@ public class queue
     
     public queue()
     {
+        /* Test Code
         System.out.println("10 people added to queue");
         addFirstPerson(); //adds the first person, that people can follow
         addQueuers(10); //add followers to first person
         printQueue(head); //prints out the id's of people in queue, from head
+        */
+        modelQueuers(2);
     }
     
     void addFirstPerson(){
@@ -25,6 +30,37 @@ public class queue
             tail.addfollower(queuer); //adds them to end of queue
             tail = tail.follower(); //sets last in queue to them
         }
+    }
+    
+    void modelQueuers(int value){
+        person queuer; //creates queuer variable
+        double numberJoiningDecimal = 0; //calculated value for people joining queue
+        int numberJoining; //amount of whole numbers in initial calculated value
+        double chanceJoining; //decimal amount from initial calculated value
+        for(int i = 1; i<(3600/*seconds in hour*/); i++){
+            numberJoiningDecimal = (-value/3600.00000)*i+value;
+            /* This is the amount of people who will join the queue each second
+             * I found this formula, the students joining will go down and reach 0, at one hour
+             * Value is a constent that can be changed to change the amount of students
+             */ 
+            numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
+            chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
+            System.out.println("Initial Number " + numberJoiningDecimal);
+            System.out.println("Whole Number " + numberJoining);
+            System.out.println("Decimal Number " + chanceJoining);
+            try{
+                Thread.sleep(100);
+            }
+            catch(InterruptedException ex){
+                Thread.currentThread().interrupt();
+            }
+            /*
+            queuer = new person(i); //creates new queuer with id
+            tail.addfollower(queuer); //adds them to end of queue
+            tail = tail.follower(); //sets last in queue to them
+            */
+        }
+        
     }
     
     void leaveQueue(){
