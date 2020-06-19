@@ -1,5 +1,5 @@
 
-
+import java.util.Random;
 public class queue
 {
     person first; //first person to join queue
@@ -10,11 +10,11 @@ public class queue
     {
         /* Test Code
         System.out.println("10 people added to queue");
-        addFirstPerson(); //adds the first person, that people can follow
         addQueuers(10); //add followers to first person
-        printQueue(head); //prints out the id's of people in queue, from head
         */
-        modelQueuers(2);
+        addFirstPerson(); //adds the first person, that people can follow
+        modelQueuers(3); //adds the rest of the queue for the hour
+        printQueue(head); //prints out the id's of people in queue, from head
     }
     
     void addFirstPerson(){
@@ -26,7 +26,7 @@ public class queue
     void addQueuers(int amount){
         person queuer; //creates queuer variable
         for(int i = 1; i<(amount+1); i++){
-            queuer = new person(i); //creates new queuer with id
+            queuer = new person(tail.myId()+1); //creates new queuer with id
             tail.addfollower(queuer); //adds them to end of queue
             tail = tail.follower(); //sets last in queue to them
         }
@@ -45,22 +45,14 @@ public class queue
              */ 
             numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
             chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
-            System.out.println("Initial Number " + numberJoiningDecimal);
-            System.out.println("Whole Number " + numberJoining);
-            System.out.println("Decimal Number " + chanceJoining);
-            try{
-                Thread.sleep(100);
+     
+            addQueuers(numberJoining); //adds whole amount of queuers
+            Random rand = new Random(); //finds whether another person is added
+            double n = (rand.nextInt(1000)/1000.00000);
+            if(chanceJoining > n){
+               addQueuers(1); 
             }
-            catch(InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }
-            /*
-            queuer = new person(i); //creates new queuer with id
-            tail.addfollower(queuer); //adds them to end of queue
-            tail = tail.follower(); //sets last in queue to them
-            */
         }
-        
     }
     
     void leaveQueue(){
@@ -75,3 +67,10 @@ public class queue
         }
     }
 }
+/*
+            try{
+                Thread.sleep(100);
+            }
+            catch(InterruptedException ex){
+                Thread.currentThread().interrupt();
+            }*/
