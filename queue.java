@@ -1,4 +1,3 @@
-
 import java.util.Random;
 public class queue
 {
@@ -13,10 +12,6 @@ public class queue
     int hungryStudents = 0;
     public queue()
     {
-        /* Test Code
-        System.out.println("10 people added to queue");
-        addQueuers(10); //add followers to first person
-        */
         addFirstPerson(); //adds the first person, that people can follow
         modelQueuers(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         printQueue(head); //prints out the id's of people in queue, from head
