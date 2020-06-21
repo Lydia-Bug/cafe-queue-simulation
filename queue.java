@@ -31,7 +31,7 @@ public class queue
             queuer = null;
             Random rand = new Random(); //finds whether another person is added
             double n = rand.nextInt(StudentsPerTeachers);
-            if(n >= StudentsPerTeachers) queuer = new person(tail.myId()+1 , false); //creates new queuer with id
+            if(n >= StudentsPerTeachers) queuer = new person(tail.myId()+1 , false); ///creates new queuer with id
             if(n < StudentsPerTeachers) queuer = new person(tail.myId()+1 , true); //creates new queuer with id
             tail.addfollower(queuer); //adds them to end of queue
             tail = tail.follower(); //sets last in queue to them
