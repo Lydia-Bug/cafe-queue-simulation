@@ -8,7 +8,7 @@ public class queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     
     double amountConstant = 0.1;
-    int StudentsPerTeachers = 10;
+    int StudentsPerTeachers = 10; //Student to teacher ratio
     public queue()
     {
         /* Test Code
@@ -31,7 +31,7 @@ public class queue
         for(int i = 1; i<(amount+1); i++){
             queuer = null;
             Random rand = new Random(); //finds whether another person is added
-            double n = rand.nextInt(StudentsPerTeachers);
+            int n = (rand.nextInt(StudentsPerTeachers))+1;
             if(n >= StudentsPerTeachers){ ///creates teacher
                 queuer = new person(tail.myId()+1 , false);
                 second = head; //makes first in queue, second in queue
