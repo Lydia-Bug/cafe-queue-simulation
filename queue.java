@@ -65,6 +65,15 @@ public class queue
         }
     }
     
+    int findQueueLength(person t){ //method for finding queue length
+        int queueLength = 0;
+        while (t != null){
+            t=t.follower();
+            queueLength++;
+        }
+        return queueLength;
+    }
+    
     void leaveQueue(){
         head = head.follower(); //Sets the second person in queue as the head of the queue
     }
