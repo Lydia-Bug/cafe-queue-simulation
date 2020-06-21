@@ -9,6 +9,7 @@ public class queue
     
     double amountConstant = 0.1;
     int StudentsPerTeachers = 10; //Student to teacher ratio
+    int maxQueueLength = 125;
     public queue()
     {
         /* Test Code
@@ -47,7 +48,6 @@ public class queue
     }
     
     void modelQueuers(double value){
-        person queuer; //creates queuer variable
         double numberJoiningDecimal = 0; //calculated value for people joining queue
         int numberJoining; //amount of whole numbers in initial calculated value
         double chanceJoining; //decimal amount from initial calculated value
