@@ -5,6 +5,7 @@ public class queue
     person first; //first person to join queue
     person head; //person at front of queue
     person tail; //person at end of queue
+    person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     
     int amountConstant = 3;
     int StudentsPerTeachers = 10;
@@ -31,10 +32,17 @@ public class queue
             queuer = null;
             Random rand = new Random(); //finds whether another person is added
             double n = rand.nextInt(StudentsPerTeachers);
-            if(n >= StudentsPerTeachers) queuer = new person(tail.myId()+1 , false); ///creates new queuer with id
-            if(n < StudentsPerTeachers) queuer = new person(tail.myId()+1 , true); //creates new queuer with id
-            tail.addfollower(queuer); //adds them to end of queue
-            tail = tail.follower(); //sets last in queue to them
+            if(n >= StudentsPerTeachers){ ///creates teacher
+                queuer = new person(tail.myId()+1 , false);
+                second = head; //makes first in queue, second in queue
+                head = queuer; //puts teacher in head of queue
+                queuer.addfollower(second); //adds second as follower to head
+            }
+            if(n < StudentsPerTeachers){//creates student
+                queuer = new person(tail.myId()+1 , true); 
+                tail.addfollower(queuer); //adds them to end of queue
+                tail = tail.follower(); //sets last in queue to them
+            }
         }
     }
     
