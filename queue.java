@@ -7,7 +7,7 @@ public class queue
     person tail; //person at end of queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     
-    int amountConstant = 3;
+    double amountConstant = 0.1;
     int StudentsPerTeachers = 10;
     public queue()
     {
@@ -46,7 +46,7 @@ public class queue
         }
     }
     
-    void modelQueuers(int value){
+    void modelQueuers(double value){
         person queuer; //creates queuer variable
         double numberJoiningDecimal = 0; //calculated value for people joining queue
         int numberJoining; //amount of whole numbers in initial calculated value
