@@ -10,6 +10,7 @@ public class queue
     double amountConstant = 0.1;
     int StudentsPerTeachers = 10; //Student to teacher ratio
     int maxQueueLength = 125;
+    int hungryStudents = 0;
     public queue()
     {
         /* Test Code
@@ -19,6 +20,8 @@ public class queue
         addFirstPerson(); //adds the first person, that people can follow
         modelQueuers(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         printQueue(head); //prints out the id's of people in queue, from head
+        System.out.println("Hungry students: " + hungryStudents);
+        System.out.println("Queue length: " + QueueLength(head));
     }
     
     void addFirstPerson(){
@@ -40,9 +43,13 @@ public class queue
                 queuer.addfollower(second); //adds second as follower to head
             }
             if(n < StudentsPerTeachers){//creates student
-                queuer = new person(tail.myId()+1 , true); 
-                tail.addfollower(queuer); //adds them to end of queue
-                tail = tail.follower(); //sets last in queue to them
+                if(QueueLength(head) < maxQueueLength){ //checks queue length
+                    queuer = new person(tail.myId()+1 , true); 
+                    tail.addfollower(queuer); //adds them to end of queue
+                    tail = tail.follower(); //sets last in queue to them
+                }else{
+                    hungryStudents++;
+                }
             }
         }
     }
@@ -65,7 +72,7 @@ public class queue
         }
     }
     
-    int findQueueLength(person t){ //method for finding queue length
+    int QueueLength(person t){ //method for finding queue length
         int queueLength = 0;
         while (t != null){
             t=t.follower();
