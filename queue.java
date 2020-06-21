@@ -12,38 +12,46 @@ public class queue
     int hungryStudents = 0;
     public queue()
     {
-        addFirstPerson(); //adds the first person, that people can follow
         modelQueuers(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         printQueue(head); //prints out the id's of people in queue, from head
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Queue length: " + QueueLength(head));
     }
     
-    void addFirstPerson(){
-        first = new person(0 , true); //creates new person with id 0
-        tail = first; //sets first in queue to them
-        head = first; //sets last in queue to them
+    void addFirstPerson(person queuer){
+        head = queuer; //sets first in queue to them
+        tail = queuer; //sets last in queue to them
     }
     
     void addQueuers(int amount){
         person queuer; //creates queuer variable
         for(int i = 1; i<(amount+1); i++){
             queuer = null;
-            Random rand = new Random(); //finds whether another person is added
+            Random rand = new Random(); 
             int n = (rand.nextInt(StudentsPerTeachers))+1;
             if(n >= StudentsPerTeachers){ ///creates teacher
-                queuer = new person(tail.myId()+1 , false);
-                second = head; //makes first in queue, second in queue
-                head = queuer; //puts teacher in head of queue
-                queuer.addfollower(second); //adds second as follower to head
+                queuer = new person(false);
+                if(head == null){ 
+                    System.out.println("yass");
+                    addFirstPerson(queuer);
+                }else{
+                    second = head; //makes first in queue, second in queue
+                    head = queuer; //puts teacher in head of queue
+                    queuer.addfollower(second); //adds second as follower to head
+                }
             }
             if(n < StudentsPerTeachers){//creates student
-                if(QueueLength(head) < maxQueueLength){ //checks queue length
-                    queuer = new person(tail.myId()+1 , true); 
-                    tail.addfollower(queuer); //adds them to end of queue
-                    tail = tail.follower(); //sets last in queue to them
+                queuer = new person(true); 
+                if(head == null){ //if queue is empty
+                    System.out.println("yass");
+                    addFirstPerson(queuer);
                 }else{
-                    hungryStudents++;
+                    if(QueueLength(head) < maxQueueLength){ //checks queue length 
+                        tail.addfollower(queuer); //adds them to end of queue
+                        tail = tail.follower(); //sets last in queue to them
+                    }else{
+                        hungryStudents++;
+                    }
                 }
             }
         }
@@ -83,8 +91,8 @@ public class queue
     void printQueue(person t){ //prints out queue
         System.out.println("The queue consists of:");
         while (t != null){
-            System.out.print(t.myRole());
-            System.out.println(t.myId());
+            System.out.println(t.myRole());
+            //System.out.println(t.myId());
             t=t.follower();
         }
     }

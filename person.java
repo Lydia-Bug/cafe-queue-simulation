@@ -8,6 +8,9 @@ public class person
       this.id = id;
       this.student = student;
   }
+  public person(boolean student){ //creates a new person object 
+      this.student = student;
+  }
   public void addfollower(person follower){ //adds follower
       this.follower = follower;
   }
