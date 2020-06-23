@@ -5,14 +5,19 @@ public class queue
     person head; //person at front of queue
     person tail; //person at end of queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
+    person served = null; //person in 'serving area'
     
-    double amountConstant = 0.1;
+    double amountConstant = 0.05;
     int StudentsPerTeachers = 10; //Student to teacher ratio
     int maxQueueLength = 125;
     int hungryStudents = 0;
+    
+    double numberJoiningDecimal = 0; //calculated value for people joining queue
+    int numberJoining; //amount of whole numbers in initial calculated value
+    double chanceJoining; //decimal amount from initial calculated value
     public queue()
     {
-        modelQueuers(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
+        modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         printQueue(head); //prints out the id's of people in queue, from head
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Queue length: " + QueueLength(head));
@@ -32,7 +37,6 @@ public class queue
             if(n >= StudentsPerTeachers){ ///creates teacher
                 queuer = new person(false);
                 if(head == null){ 
-                    System.out.println("yass");
                     addFirstPerson(queuer);
                 }else{
                     second = head; //makes first in queue, second in queue
@@ -43,7 +47,6 @@ public class queue
             if(n < StudentsPerTeachers){//creates student
                 queuer = new person(true); 
                 if(head == null){ //if queue is empty
-                    System.out.println("yass");
                     addFirstPerson(queuer);
                 }else{
                     if(QueueLength(head) < maxQueueLength){ //checks queue length 
@@ -57,21 +60,25 @@ public class queue
         }
     }
     
-    void modelQueuers(double value){
-        double numberJoiningDecimal = 0; //calculated value for people joining queue
-        int numberJoining; //amount of whole numbers in initial calculated value
-        double chanceJoining; //decimal amount from initial calculated value
-        for(int i = 1; i<(3600/*seconds in hour*/); i++){
-            numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
-            numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
-            chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
-     
-            addQueuers(numberJoining); //adds whole amount of queuers
-            Random rand = new Random(); //finds whether another person is added
-            double n = (rand.nextInt(1000)/1000.00000);
-            if(chanceJoining > n){
-               addQueuers(1); 
+    void modelQueue(double value){
+        for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
+            modelAddQueuers(value, i);
+            if (served = null){
+                
             }
+        }
+    }
+    
+    void modelAddQueuers(double value, int i){
+        numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
+        numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
+        chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
+     
+        addQueuers(numberJoining); //adds whole amount of queuers
+        Random rand = new Random(); //finds whether another person is added
+        double n = (rand.nextInt(1000)/1000.00000);
+        if(chanceJoining > n){
+            addQueuers(1); 
         }
     }
     
