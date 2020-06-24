@@ -7,10 +7,13 @@ public class queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     person served = null; //person in 'serving area'
     
-    double amountConstant = 0.05;
+    double amountConstant = 0.25;
     int StudentsPerTeachers = 10; //Student to teacher ratio
     int maxQueueLength = 125;
     int hungryStudents = 0;
+    int notHungryStudents = 0;
+    int servingTime = 10; //should this be random???
+    int timeBeingServed;
     
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
@@ -20,14 +23,16 @@ public class queue
         modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         printQueue(head); //prints out the id's of people in queue, from head
         System.out.println("Hungry students: " + hungryStudents);
+        System.out.println("Served students: " + notHungryStudents);
         System.out.println("Queue length: " + QueueLength(head));
-        System.out.println("Person being served :" + served);
     }
     
     void modelQueue(double value){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             modelAddQueuers(value, i); //adds queuers
             servePerson(); //puts people in 'serving area'
+            timeBeingServed++; //keeps track of how long someone is being served
+            finishServing();
         }
     }
     
@@ -100,6 +105,15 @@ public class queue
                 served = head;
                 head = second; //Sets the second person in queue as the head of the queue
             }
+            timeBeingServed = 0;
+        }
+    }
+    
+    void finishServing(){
+        if(timeBeingServed >= servingTime){
+            served = null;
+            notHungryStudents++;
+            timeBeingServed = 0;
         }
     }
     
