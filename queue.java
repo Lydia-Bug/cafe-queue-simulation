@@ -21,6 +21,7 @@ public class queue
         printQueue(head); //prints out the id's of people in queue, from head
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Queue length: " + QueueLength(head));
+        System.out.println("Person being served :" + served);
     }
     
     void addFirstPerson(person queuer){
@@ -62,10 +63,8 @@ public class queue
     
     void modelQueue(double value){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            modelAddQueuers(value, i);
-            if (served = null){
-                
-            }
+            modelAddQueuers(value, i); //adds queuers
+            servePerson(); //puts people in 'serving area'
         }
     }
     
@@ -91,8 +90,17 @@ public class queue
         return queueLength;
     }
     
-    void leaveQueue(){
-        head = head.follower(); //Sets the second person in queue as the head of the queue
+    void servePerson(){
+        if (served == null && head != null){ //checks if no one being served, and if there is head
+            if(head.follower() == null){ //if no second person
+                served = head;
+                head = null;
+            }else{ //if second person, that now needs to become head
+                second = head.follower();
+                served = head;
+                head = second; //Sets the second person in queue as the head of the queue
+            }
+        }
     }
     
     void printQueue(person t){ //prints out queue
