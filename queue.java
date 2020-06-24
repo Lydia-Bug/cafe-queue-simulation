@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.*;
 public class queue
 {
     person first; //first person to join queue
@@ -14,17 +15,31 @@ public class queue
     int notHungryStudents = 0;
     int servingTime = 10; //should this be random???
     int timeBeingServed;
+    boolean teachersCut;
     
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
     double chanceJoining; //decimal amount from initial calculated value
-    public queue()
-    {
+    public queue(){
+        askVariables();
         modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
-        printQueue(head); //prints out the id's of people in queue, from head
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Served students: " + notHungryStudents);
         System.out.println("Queue length: " + QueueLength(head));
+    }
+    
+    void askVariables(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter student constant: ");
+        amountConstant = scan.nextDouble();
+        System.out.println("Enter amount of students per one teacher: ");
+        StudentsPerTeachers = scan.nextInt();
+        System.out.println("Enter maximum queue length that students will join: ");
+        maxQueueLength = scan.nextInt();
+        System.out.println("Enter serving time: ");
+        servingTime = scan.nextInt();
+        System.out.println("Can teachers cut to front of queue? (true if yes)" );
+        teachersCut = scan.nextBoolean();
     }
     
     void modelQueue(double value){
