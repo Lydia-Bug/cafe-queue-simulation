@@ -24,12 +24,19 @@ public class queue
         System.out.println("Person being served :" + served);
     }
     
-    void addFirstPerson(person queuer){
+    void modelQueue(double value){
+        for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
+            modelAddQueuers(value, i); //adds queuers
+            servePerson(); //puts people in 'serving area'
+        }
+    }
+    
+    void addFirstPerson(person queuer){ 
         head = queuer; //sets first in queue to them
         tail = queuer; //sets last in queue to them
     }
     
-    void addQueuers(int amount){
+    void addQueuers(int amount){ //adds individual queuers
         person queuer; //creates queuer variable
         for(int i = 1; i<(amount+1); i++){
             queuer = null;
@@ -61,14 +68,7 @@ public class queue
         }
     }
     
-    void modelQueue(double value){
-        for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            modelAddQueuers(value, i); //adds queuers
-            servePerson(); //puts people in 'serving area'
-        }
-    }
-    
-    void modelAddQueuers(double value, int i){
+    void modelAddQueuers(double value, int i){ //figures out how many queuers to add
         numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
         numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
         chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
