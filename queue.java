@@ -34,6 +34,7 @@ public class queue
             timeBeingServed++; //keeps track of how long someone is being served
             finishServing();
         }
+        hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
     }
     
     void addFirstPerson(person queuer){ 
