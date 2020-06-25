@@ -63,6 +63,7 @@ public class queue
             queuer = null;
             Random rand = new Random(); 
             int n = (rand.nextInt(StudentsPerTeachers))+1;
+            if(teachersCut == false) n = -1; //if teachers can't cut, then no teachers are added, as they act the same as students
             if(n >= StudentsPerTeachers){ ///creates teacher
                 queuer = new person(false);
                 if(head == null){ 
