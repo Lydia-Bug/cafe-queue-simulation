@@ -16,6 +16,7 @@ public class queue
     int servingTime = 10; //should this be random???
     int timeBeingServed;
     boolean teachersCut;
+    int totalWaitTime = 0;
     
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
@@ -25,7 +26,8 @@ public class queue
         modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Served students: " + notHungryStudents);
-        System.out.println("Queue length: " + QueueLength(head));
+        double averageWaitTime = (totalWaitTime / notHungryStudents)/60;
+        System.out.println("Average wait time: " + averageWaitTime + "mins");
     }
     
     void askVariables(){
@@ -47,7 +49,7 @@ public class queue
             modelAddQueuers(value, i); //adds queuers
             servePerson(); //puts people in 'serving area'
             timeBeingServed++; //keeps track of how long someone is being served
-            finishServing();
+            finishServing(i);
         }
         hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
     }
@@ -57,7 +59,7 @@ public class queue
         tail = queuer; //sets last in queue to them
     }
     
-    void addQueuers(int amount){ //adds individual queuers
+    void addQueuers(int amount, int startTime){ //adds individual queuers
         person queuer; //creates queuer variable
         for(int i = 1; i<(amount+1); i++){
             queuer = null;
@@ -65,7 +67,7 @@ public class queue
             int n = (rand.nextInt(StudentsPerTeachers))+1;
             if(teachersCut == false) n = -1; //if teachers can't cut, then no teachers are added, as they act the same as students
             if(n >= StudentsPerTeachers){ ///creates teacher
-                queuer = new person(false);
+                queuer = new person(false, startTime);
                 if(head == null){ 
                     addFirstPerson(queuer);
                 }else{
@@ -75,7 +77,7 @@ public class queue
                 }
             }
             if(n < StudentsPerTeachers){//creates student
-                queuer = new person(true); 
+                queuer = new person(true, startTime); 
                 if(head == null){ //if queue is empty
                     addFirstPerson(queuer);
                 }else{
@@ -95,11 +97,11 @@ public class queue
         numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
         chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
      
-        addQueuers(numberJoining); //adds whole amount of queuers
+        addQueuers(numberJoining, i); //adds whole amount of queuers
         Random rand = new Random(); //finds whether another person is added
         double n = (rand.nextInt(1000)/1000.00000);
         if(chanceJoining > n){
-            addQueuers(1); 
+            addQueuers(1, i); 
         }
     }
     
@@ -126,8 +128,9 @@ public class queue
         }
     }
     
-    void finishServing(){
+    void finishServing(int endTime){
         if(timeBeingServed >= servingTime){
+            totalWaitTime += (endTime - served.startTime());
             served = null;
             notHungryStudents++;
             timeBeingServed = 0;
