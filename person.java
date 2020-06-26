@@ -6,10 +6,6 @@ public class person
   private boolean student; //teacher or students? if true: student
   private int startTime;
   private int waitingTime;
-  public person(int id, boolean student){ //creates a new person object 
-      this.id = id;
-      this.student = student;
-  }
   public person(boolean student, int srartTime){ //creates a new person object 
       this.student = student;
       this.startTime = startTime;

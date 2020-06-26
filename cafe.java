@@ -1,10 +1,7 @@
 import java.util.Random;
 import java.util.*;
-public class queue
+public class cafe
 {
-    person first; //first person to join queue
-    person head; //person at front of queue
-    person tail; //person at end of queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     person served = null; //person in 'serving area'
     
@@ -21,7 +18,8 @@ public class queue
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
     double chanceJoining; //decimal amount from initial calculated value
-    public queue(){
+    
+    public cafe(){
         askVariables();
         modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
         System.out.println("Hungry students: " + hungryStudents);
@@ -53,13 +51,7 @@ public class queue
         }
         hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
     }
-    
-    
-    
-    void addFirstPerson(person queuer){ 
-        head = queuer; //sets first in queue to them
-        tail = queuer; //sets last in queue to them
-    }
+   
     
     void addQueuers(int amount, int startTime){ //adds individual queuers
         person queuer; //creates queuer variable
@@ -106,15 +98,7 @@ public class queue
             addQueuers(1, i); 
         }
     }
-    
-    int QueueLength(person t){ //method for finding queue length
-        int queueLength = 0;
-        while (t != null){
-            t=t.follower();
-            queueLength++;
-        }
-        return queueLength;
-    }
+   
     
     void servePerson(){
         if (served == null && head != null){ //checks if no one being served, and if there is head
@@ -132,26 +116,14 @@ public class queue
     
     void finishServing(int endTime){
         if(timeBeingServed >= servingTime){
-            totalWaitTime += (endTime - served.startTime());
+            //totalWaitTime += (endTime - served.startTime());
+            totalWaitTime = endTime;
+            totalWaitTime = served.startTime();
+            
             served = null;
             notHungryStudents++;
             timeBeingServed = 0;
         }
     }
     
-    void printQueue(person t){ //prints out queue
-        System.out.println("The queue consists of:");
-        while (t != null){
-            System.out.println(t.myRole());
-            //System.out.println(t.myId());
-            t=t.follower();
-        }
-    }
 }
-/*
-            try{
-                Thread.sleep(100);
-            }
-            catch(InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }*/
