@@ -61,34 +61,43 @@ public class queue
         tail = queuer; //sets last in queue to them
     }
     
-    void addQueuers(int amount, int startTime){ //adds individual queuers
-        person queuer; //creates queuer variable
-        for(int i = 1; i<(amount+1); i++){
-            queuer = null;
+    boolean isStudent(){ //finds whether teach or student is added
+        if(teachersCut == true){
             Random rand = new Random(); 
             int n = (rand.nextInt(StudentsPerTeachers))+1;
-            if(teachersCut == false) n = -1; //if teachers can't cut, then no teachers are added, as they act the same as students
-            if(n >= StudentsPerTeachers){ ///creates teacher
-                queuer = new person(false, startTime);
-                if(head == null){ 
-                    addFirstPerson(queuer);
-                }else{
-                    second = head; //makes first in queue, second in queue
-                    head = queuer; //puts teacher in head of queue
-                    queuer.addfollower(second); //adds second as follower to head
-                }
+            if(n >= StudentsPerTeachers) {
+                return false;
+            } else {   
+                return true;
             }
-            if(n < StudentsPerTeachers){//creates student
-                queuer = new person(true, startTime); 
-                if(head == null){ //if queue is empty
-                    addFirstPerson(queuer);
+        } else {
+            return true; 
+        }
+    }
+    
+    void addQueuers(int startTime){ //adds individual queuers
+        person queuer; //creates queuer variable
+        queuer = null;
+        if(!isStudent()){ ///creates teacher
+            queuer = new person(false, startTime);
+            if(head == null){ 
+                addFirstPerson(queuer);
+            }else{
+                second = head; //makes first in queue, second in queue
+                head = queuer; //puts teacher in head of queue
+                queuer.addfollower(second); //adds second as follower to head
+            }
+        }
+        if(isStudent()){//creates student
+            queuer = new person(true, startTime); 
+            if(head == null){ //if queue is empty
+                addFirstPerson(queuer);
+            }else{
+                if(QueueLength(head) < maxQueueLength){ //checks queue length 
+                    tail.addfollower(queuer); //adds them to end of queue
+                    tail = tail.follower(); //sets last in queue to them
                 }else{
-                    if(QueueLength(head) < maxQueueLength){ //checks queue length 
-                        tail.addfollower(queuer); //adds them to end of queue
-                        tail = tail.follower(); //sets last in queue to them
-                    }else{
-                        hungryStudents++;
-                    }
+                    hungryStudents++;
                 }
             }
         }
@@ -98,12 +107,12 @@ public class queue
         numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
         numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
         chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
-     
-        addQueuers(numberJoining, i); //adds whole amount of queuers
+  
         Random rand = new Random(); //finds whether another person is added
         double n = (rand.nextInt(1000)/1000.00000);
-        if(chanceJoining > n){
-            addQueuers(1, i); 
+        if(chanceJoining > n) numberJoining ++; //adds one more person if so
+        for(int j = 0; j < numberJoining; j++){ 
+            addQueuers(i); 
         }
     }
     
