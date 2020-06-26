@@ -21,6 +21,7 @@ public class queue
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
     double chanceJoining; //decimal amount from initial calculated value
+    /*
     public queue(){
         askVariables();
         modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
@@ -28,6 +29,12 @@ public class queue
         System.out.println("Served students: " + notHungryStudents);
         double averageWaitTime = (totalWaitTime / notHungryStudents)/60;
         System.out.println("Average wait time: " + averageWaitTime + "mins");
+    }
+    */
+   
+    public queue(){
+        head = null;
+        tail = null;
     }
     
     void askVariables(){
@@ -41,7 +48,6 @@ public class queue
         System.out.println("Enter serving time: ");
         servingTime = scan.nextInt();
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
-        teachersCut = scan.nextBoolean();
     }
     
     void modelQueue(double value){
@@ -53,8 +59,6 @@ public class queue
         }
         hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
     }
-    
-    
     
     void addFirstPerson(person queuer){ 
         head = queuer; //sets first in queue to them
@@ -77,7 +81,6 @@ public class queue
     
     void addQueuers(int startTime){ //adds individual queuers
         person queuer; //creates queuer variable
-        queuer = null;
         if(!isStudent()){ ///creates teacher
             queuer = new person(false, startTime);
             if(head == null){ 
@@ -157,10 +160,3 @@ public class queue
         }
     }
 }
-/*
-            try{
-                Thread.sleep(100);
-            }
-            catch(InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }*/
