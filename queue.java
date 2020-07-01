@@ -49,7 +49,7 @@ public class queue
         servingTime = scan.nextInt();
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
     }
-    
+   
     void modelQueue(double value){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             modelAddQueuers(value, i); //adds queuers
@@ -158,5 +158,15 @@ public class queue
             //System.out.println(t.myId());
             t=t.follower();
         }
+    }
+    
+    int hungryStudents(){
+        return hungryStudents;
+    }
+    int notHungryStudents(){
+        return notHungryStudents;
+    }
+    int totalWaitTime(){
+        return totalWaitTime;
     }
 }
