@@ -49,6 +49,7 @@ public class queue
         System.out.println("Enter serving time: ");
         servingTime = scan.nextInt();
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
+        teachersCut = scan.nextBoolean();
     }
     */
     void modelQueue(double value){
@@ -131,6 +132,7 @@ public class queue
     
     void servePerson(){
         if (served == null && head != null){ //checks if no one being served, and if there is head
+            System.out.print("3");
             if(head.follower() == null){ //if no second person
                 served = head;
                 head = null;
@@ -169,5 +171,8 @@ public class queue
     }
     int totalWaitTime(){
         return totalWaitTime;
+    }
+    person head(){
+        return head;
     }
 }
