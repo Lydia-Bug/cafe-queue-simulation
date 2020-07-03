@@ -21,47 +21,12 @@ public class queue
     double numberJoiningDecimal = 0; //calculated value for people joining queue
     int numberJoining; //amount of whole numbers in initial calculated value
     double chanceJoining; //decimal amount from initial calculated value
-    /*
-    public queue(){
-        askVariables();
-        modelQueue(amountConstant); //adds the rest of the queue for the hour, 3 is a constant for formula
-        System.out.println("Hungry students: " + hungryStudents);
-        System.out.println("Served students: " + notHungryStudents);
-        double averageWaitTime = (totalWaitTime / notHungryStudents)/60;
-        System.out.println("Average wait time: " + averageWaitTime + "mins");
-    }
-    */
    
     public queue(){
         head = null;
         tail = null;
     }
     
-    /*
-    void askVariables(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter student constant: ");
-        amountConstant = scan.nextDouble();
-        System.out.println("Enter amount of students per one teacher: ");
-        StudentsPerTeachers = scan.nextInt();
-        System.out.println("Enter maximum queue length that students will join: ");
-        maxQueueLength = scan.nextInt();
-        System.out.println("Enter serving time: ");
-        servingTime = scan.nextInt();
-        System.out.println("Can teachers cut to front of queue? (true if yes)" );
-        teachersCut = scan.nextBoolean();
-    }
-    
-    void modelQueue(double value){
-        for(int i = 1; i<(3600/*seconds in hour*//*); i++){ //does action every second of the hour
-            modelAddQueuers(value, i); //adds queuers
-            servePerson(); //puts people in 'serving area'
-            timeBeingServed++; //keeps track of how long someone is being served
-            finishServing(i);
-        }
-        hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
-    }
-    */
     void addFirstPerson(person queuer){ 
         head = queuer; //sets first in queue to them
         tail = queuer; //sets last in queue to them
@@ -107,20 +72,6 @@ public class queue
             }
         }
     }
-    
-    /*
-    int queuersAdded(double value, int i){ //figures out how many queuers to add
-        numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
-        numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
-        chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
-  
-        Random rand = new Random(); //finds whether another person is added
-        double n = (rand.nextInt(1000)/1000.00000);
-        if(chanceJoining > n) numberJoining ++; //adds one more person if so
-        
-        return numberJoining;
-    }
-    */
     
     int QueueLength(person t){ //method for finding queue length
         int queueLength = 0;
