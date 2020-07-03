@@ -1,12 +1,12 @@
 import java.util.*;
 public class cafe
 {
-    double amountConstant = 0.25;
-    int StudentsPerTeachers = 10; //Student to teacher ratio
-    int maxQueueLength = 125;
+    double amountConstant;
+    int StudentsPerTeachers; //Student to teacher ratio
+    int maxQueueLength;
     int hungryStudents = 0;
     int notHungryStudents = 0;
-    int servingTime = 10; //should this be random???
+    int servingTime; //should this be random???
     int timeBeingServed;
     boolean teachersCut;
     int totalWaitTime = 0;
