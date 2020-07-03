@@ -11,6 +11,10 @@ public class cafe
     boolean teachersCut;
     int totalWaitTime = 0;
     
+    double numberJoiningDecimal = 0; //calculated value for people joining queue
+    int numberJoining; //amount of whole numbers in initial calculated value
+    double chanceJoining; //decimal amount from initial calculated value
+    
     public cafe(){
         queue cafeQueue = new queue();
         askVariables();
@@ -38,7 +42,7 @@ public class cafe
     
     void modelQueue(double value , queue cafeQueue){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            for(int j = 0; j < cafeQueue.queuersAdded(value, i); j++){ 
+            for(int j = 0; j < queuersAdded(value, i); j++){ 
                 cafeQueue.addQueuers(i); 
             }
             
@@ -47,5 +51,17 @@ public class cafe
             cafeQueue.finishServing(i, timeBeingServed, servingTime);
         }
         hungryStudents += cafeQueue.QueueLength(cafeQueue.head); //students who are still in queue at end of lunch, are hungry students
+    }
+    
+    int queuersAdded(double value, int i){ //figures out how many queuers to add
+        numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
+        numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
+        chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
+  
+        Random rand = new Random(); //finds whether another person is added
+        double n = (rand.nextInt(1000)/1000.00000);
+        if(chanceJoining > n) numberJoining ++; //adds one more person if so
+        
+        return numberJoining;
     }
 }

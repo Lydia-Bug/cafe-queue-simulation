@@ -108,6 +108,7 @@ public class queue
         }
     }
     
+    /*
     int queuersAdded(double value, int i){ //figures out how many queuers to add
         numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
         numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
@@ -119,6 +120,7 @@ public class queue
         
         return numberJoining;
     }
+    */
     
     int QueueLength(person t){ //method for finding queue length
         int queueLength = 0;
