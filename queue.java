@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.*;
 public class queue
 {
     person first; //first person to join queue
@@ -7,24 +6,16 @@ public class queue
     person tail; //person at end of queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     person served = null; //person in 'serving area'
-    
-    double amountConstant = 0.25;
-    int StudentsPerTeachers = 10; //Student to teacher ratio
-    int maxQueueLength = 125;
-    int hungryStudents = 0;
-    int notHungryStudents = 0;
-    int servingTime = 10; //should this be random???
-    int timeBeingServed;
-    boolean teachersCut;
-    int totalWaitTime = 0;
-    
-    double numberJoiningDecimal = 0; //calculated value for people joining queue
-    int numberJoining; //amount of whole numbers in initial calculated value
-    double chanceJoining; //decimal amount from initial calculated value
    
+    int hungryStudents;
+    int notHungryStudents;
+    int timeBeingServed;
+    int totalWaitTime;
+    
     public queue(){
         head = null;
         tail = null;
+        totalWaitTime = 0;
     }
     
     void addFirstPerson(person queuer){ 
@@ -32,7 +23,7 @@ public class queue
         tail = queuer; //sets last in queue to them
     }
     
-    boolean isStudent(){ //finds whether teach or student is added
+    boolean isStudent(boolean teachersCut , int StudentsPerTeachers){ //finds whether teach or student is added
         if(teachersCut == true){
             Random rand = new Random(); 
             int n = (rand.nextInt(StudentsPerTeachers))+1;
@@ -46,9 +37,9 @@ public class queue
         }
     }
     
-    void addQueuers(int startTime){ //adds individual queuers
+    void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , int StudentsPerTeachers ){ //adds individual queuers
         person queuer; //creates queuer variable
-        if(!isStudent()){ ///creates teacher
+        if(!isStudent(teachersCut , StudentsPerTeachers)){ ///creates teacher
             queuer = new person(false, startTime);
             if(head == null){ 
                 addFirstPerson(queuer);
@@ -58,7 +49,7 @@ public class queue
                 queuer.addfollower(second); //adds second as follower to head
             }
         }
-        if(isStudent()){//creates student
+        if(isStudent(teachersCut , StudentsPerTeachers)){//creates student
             queuer = new person(true, startTime); 
             if(head == null){ //if queue is empty
                 addFirstPerson(queuer);
