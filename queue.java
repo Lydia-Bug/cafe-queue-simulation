@@ -51,9 +51,9 @@ public class queue
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
         teachersCut = scan.nextBoolean();
     }
-    */
+    
     void modelQueue(double value){
-        for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
+        for(int i = 1; i<(3600/*seconds in hour*//*); i++){ //does action every second of the hour
             modelAddQueuers(value, i); //adds queuers
             servePerson(); //puts people in 'serving area'
             timeBeingServed++; //keeps track of how long someone is being served
@@ -61,7 +61,7 @@ public class queue
         }
         hungryStudents += QueueLength(head); //students who are still in queue at end of lunch, are hungry students
     }
-    
+    */
     void addFirstPerson(person queuer){ 
         head = queuer; //sets first in queue to them
         tail = queuer; //sets last in queue to them
@@ -130,10 +130,9 @@ public class queue
         return queueLength;
     }
     
-    void servePerson(){
+    int servePerson(int timeBeingServed){
         if (served == null && head != null){ //checks if no one being served, and if there is head
-            System.out.print("3");
-            if(head.follower() == null){ //if no second person
+             if(head.follower() == null){ //if no second person
                 served = head;
                 head = null;
             }else{ //if second person, that now needs to become head
@@ -141,11 +140,14 @@ public class queue
                 served = head;
                 head = second; //Sets the second person in queue as the head of the queue
             }
-            timeBeingServed = 0;
+            //timeBeingServed = 0;
+            return 0;
+        } else{
+            return timeBeingServed;
         }
     }
     
-    void finishServing(int endTime){
+    void finishServing(int endTime, int timeBeingServed , int servingTime){
         if(timeBeingServed >= servingTime){
             totalWaitTime += (endTime - served.startTime());
             served = null;

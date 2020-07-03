@@ -39,9 +39,9 @@ public class cafe
     void modelQueue(double value , queue cafeQueue){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             cafeQueue.modelAddQueuers(value, i); //adds queuers
-            cafeQueue.servePerson(); //puts people in 'serving area'
+            timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             timeBeingServed++; //keeps track of how long someone is being served
-            cafeQueue.finishServing(i);
+            cafeQueue.finishServing(i, timeBeingServed, servingTime);
         }
         hungryStudents += cafeQueue.QueueLength(cafeQueue.head); //students who are still in queue at end of lunch, are hungry students
     }
