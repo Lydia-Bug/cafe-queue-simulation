@@ -18,7 +18,7 @@ public class cafe
         //cafeQueue.modelQueue(amountConstant);
         System.out.println("Hungry students: " + cafeQueue.hungryStudents());
         System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents())/60;
+        double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents())/60.0;
         System.out.println("Average wait time: " + averageWaitTime + "mins");
     }
     
@@ -38,7 +38,10 @@ public class cafe
     
     void modelQueue(double value , queue cafeQueue){
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            cafeQueue.modelAddQueuers(value, i); //adds queuers
+            for(int j = 0; j < cafeQueue.queuersAdded(value, i); j++){ 
+                cafeQueue.addQueuers(i); 
+            }
+            
             timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             timeBeingServed++; //keeps track of how long someone is being served
             cafeQueue.finishServing(i, timeBeingServed, servingTime);

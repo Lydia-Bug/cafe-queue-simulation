@@ -108,7 +108,7 @@ public class queue
         }
     }
     
-    void modelAddQueuers(double value, int i){ //figures out how many queuers to add
+    int queuersAdded(double value, int i){ //figures out how many queuers to add
         numberJoiningDecimal = (-value/3600.00000)*i+value;//This is the amount of people who will join the queue each second
         numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
         chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
@@ -116,9 +116,8 @@ public class queue
         Random rand = new Random(); //finds whether another person is added
         double n = (rand.nextInt(1000)/1000.00000);
         if(chanceJoining > n) numberJoining ++; //adds one more person if so
-        for(int j = 0; j < numberJoining; j++){ 
-            addQueuers(i); 
-        }
+        
+        return numberJoining;
     }
     
     int QueueLength(person t){ //method for finding queue length
