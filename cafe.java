@@ -19,7 +19,10 @@ public class cafe
         int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLength(cafeQueue.head);
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents())/60.0;
+        //double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents())/60.00000;
+        double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents());
+        System.out.println(cafeQueue.totalWaitTime());
+        System.out.println(cafeQueue.notHungryStudents());
         System.out.println("Average wait time: " + averageWaitTime + "mins");
     }
     
@@ -41,6 +44,7 @@ public class cafe
         int timeBeingServed = 0;
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             for(int j = 0; j < queuersAdded(amountConstant, i); j++){ 
+                System.out.println("startTime i: " + i);
                 cafeQueue.addQueuers(i, maxQueueLength , teachersCut , StudentsPerTeachers ); 
             }
             

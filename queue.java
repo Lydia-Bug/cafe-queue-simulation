@@ -73,6 +73,7 @@ public class queue
         return queueLength;
     }
     
+    
     int servePerson(int timeBeingServed){
         if (served == null && head != null){ //checks if no one being served, and if there is head
              if(head.follower() == null){ //if no second person
@@ -92,6 +93,8 @@ public class queue
     
     void finishServing(int endTime, int timeBeingServed , int servingTime){
         if(timeBeingServed >= servingTime){
+            System.out.println("endtime: " + endTime);
+            System.out.println("startTime: " + served.startTime());
             totalWaitTime += (endTime - served.startTime());
             served = null;
             notHungryStudents++;
