@@ -75,17 +75,19 @@ public class queue
     
     
     int servePerson(int timeBeingServed){
-        if (served == null && head != null){ //checks if no one being served, and if there is head
-             if(head.follower() == null){ //if no second person
-                served = head;
-                head = null;
-            }else{ //if second person, that now needs to become head
-                second = head.follower();
-                served = head;
-                head = second; //Sets the second person in queue as the head of the queue
+        if (served == null){
+            if (head != null){
+                if(head.follower() == null){ //if no second person
+                    served = head;
+                    head = null;
+                }else{ //if second person, that now needs to become head
+                    second = head.follower();
+                    served = head;
+                    head = second; //Sets the second person in queue as the head of the queue
+                }
             }
-            //timeBeingServed = 0;
-            return 0;
+            return 0; //serving time is reset to 0;
+        
         } else{
             return timeBeingServed;
         }
@@ -93,8 +95,6 @@ public class queue
     
     void finishServing(int endTime, int timeBeingServed , int servingTime){
         if(timeBeingServed >= servingTime){
-            System.out.println("endtime: " + endTime);
-            System.out.println("startTime: " + served.startTime());
             totalWaitTime += (endTime - served.startTime());
             served = null;
             notHungryStudents++;

@@ -44,7 +44,6 @@ public class cafe
         int timeBeingServed = 0;
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             for(int j = 0; j < queuersAdded(amountConstant, i); j++){ 
-                System.out.println("startTime i: " + i);
                 cafeQueue.addQueuers(i, maxQueueLength , teachersCut , StudentsPerTeachers ); 
             }
             
