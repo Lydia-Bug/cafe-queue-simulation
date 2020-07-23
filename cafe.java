@@ -1,4 +1,6 @@
 import java.util.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 public class cafe
 {
     double amountConstant;
@@ -19,11 +21,17 @@ public class cafe
         int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLength(cafeQueue.head);
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        //double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents())/60.00000;
-        double averageWaitTime = (cafeQueue.totalWaitTime() / cafeQueue.notHungryStudents());
-        System.out.println(cafeQueue.totalWaitTime());
-        System.out.println(cafeQueue.notHungryStudents());
-        System.out.println("Average wait time: " + averageWaitTime + "mins");
+        
+        double averageWaitTime = averageWaitTime(cafeQueue.totalWaitTime() , cafeQueue.notHungryStudents());
+        System.out.println("Average wait time: " + averageWaitTime + " mins");
+    }
+    
+    private static DecimalFormat df = new DecimalFormat("0.00");
+    
+    double averageWaitTime(int totalWaitTime , int notHungryStudents){
+        
+        double n = (totalWaitTime / notHungryStudents) / 60.00;
+        return n;
     }
     
     void askVariables(){
@@ -47,8 +55,8 @@ public class cafe
                 cafeQueue.addQueuers(i, maxQueueLength , teachersCut , StudentsPerTeachers ); 
             }
             
-            timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             timeBeingServed++; //keeps track of how long someone is being served
+            timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             cafeQueue.finishServing(i, timeBeingServed, servingTime);
         }
     }
