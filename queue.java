@@ -48,16 +48,18 @@ public class queue
             }
         }else{
             if(isStudent(StudentsPerTeachers)){
-                queuer = new person(true, startTime); 
-                if(head == null){ //if queue is empty
-                    addFirstPerson(queuer);
+                queuer = new person(true, startTime); //student
+            }else{
+                queuer = new person(false, startTime); //teacher
+            }
+            if(head == null){ //if queue is empty
+                addFirstPerson(queuer);
+            }else{
+                if(QueueLength(head) < maxQueueLength){ //checks queue length 
+                    tail.addfollower(queuer); //adds them to end of queue
+                    tail = tail.follower(); //sets last in queue to them
                 }else{
-                    if(QueueLength(head) < maxQueueLength){ //checks queue length 
-                        tail.addfollower(queuer); //adds them to end of queue
-                        tail = tail.follower(); //sets last in queue to them
-                    }else{
-                        hungryStudents++;
-                    }
+                    hungryStudents++;
                 }
             }
         }
