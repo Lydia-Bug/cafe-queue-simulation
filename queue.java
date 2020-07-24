@@ -8,7 +8,9 @@ public class queue
     person served = null; //person in 'serving area'
    
     int hungryStudents;
-    int notHungryStudents;
+    int hungryTeachers;
+    int servedStudents;
+    int servedTeachers;
     int timeBeingServed;
     int totalWaitTime;
     
@@ -47,11 +49,8 @@ public class queue
                 }
             }
         }else{
-            if(isStudent(StudentsPerTeachers)){
-                queuer = new person(true, startTime); //student
-            }else{
-                queuer = new person(false, startTime); //teacher
-            }
+            boolean isStudent = isStudent(StudentsPerTeachers);
+            queuer = new person(isStudent, startTime);
             if(head == null){ //if queue is empty
                 addFirstPerson(queuer);
             }else{
@@ -59,7 +58,8 @@ public class queue
                     tail.addfollower(queuer); //adds them to end of queue
                     tail = tail.follower(); //sets last in queue to them
                 }else{
-                    hungryStudents++;
+                    if (isStudent = true) hungryStudents++;
+                    if (isStudent = false) hungryTeachers++;
                 }
             }
         }
@@ -74,6 +74,14 @@ public class queue
         return queueLength;
     }
     
+    int studentsOrTeachersInQueue(person t, boolean isStudents){ //method for finding queue length
+        int studentsOrTeachersInQueue = 0;
+        while (t != null){
+            if(t.isStudent() == isStudents)studentsOrTeachersInQueue++;
+            t=t.follower();
+        }
+        return studentsOrTeachersInQueue;
+    }
     
     int servePerson(int timeBeingServed){
         if (served == null){
@@ -96,17 +104,23 @@ public class queue
     
     void finishServing(int endTime, int timeBeingServed , int servingTime){
         if(timeBeingServed >= servingTime){
-            totalWaitTime += (endTime - served.startTime());
-            served = null;
-            notHungryStudents++;
             timeBeingServed = 0;
+            if(served.isStudent() == true)  {
+                servedStudents++;
+                totalWaitTime += (endTime - served.startTime());
+            }
+            if(served.isStudent() == false) { 
+                servedTeachers++;
+                totalWaitTime += (endTime - served.startTime());
+            }
+            served = null;
         }
     }
     
     void printQueue(person t){ //prints out queue
         System.out.println("The queue consists of:");
         while (t != null){
-            System.out.println(t.myRole());
+            System.out.println(t.isStudent());
             //System.out.println(t.myId());
             t=t.follower();
         }
@@ -115,8 +129,14 @@ public class queue
     int hungryStudents(){
         return hungryStudents;
     }
-    int notHungryStudents(){
-        return notHungryStudents;
+    int servedStudents(){
+        return servedStudents;
+    }
+    int hungryTeachers(){
+        return hungryTeachers;
+    }
+    int servedTeachers(){
+        return servedTeachers;
     }
     int totalWaitTime(){
         return totalWaitTime;

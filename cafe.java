@@ -16,15 +16,21 @@ public class cafe
     }
     
     void outputvariables(queue cafeQueue){
-        int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLength(cafeQueue.head);
-        System.out.println("Hungry students: " + hungryStudents);
-        System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        String averageWaitTime = averageWaitTime(cafeQueue.totalWaitTime() , cafeQueue.notHungryStudents());
+        //int hungryStudents =  + cafeQueue.QueueLength(cafeQueue.head);
+        
+        System.out.println("Hungry students: " + hungryStudents(cafeQueue));
+        System.out.println("Hungry teachers: " + hungryTeachers(cafeQueue));
+        System.out.println("Served students: " + cafeQueue.servedStudents());
+        System.out.println("Served teachers: " + cafeQueue.servedTeachers());
+        String averageWaitTime = averageWaitTime(cafeQueue.totalWaitTime() , cafeQueue.servedStudents());
         System.out.println("Average wait time: " + averageWaitTime);
     }
     
-    String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
-        int totalSeconds = totalWaitTime / notHungryStudents; 
+    int hungryStudents(queue cafeQueue){return cafeQueue.hungryStudents() + cafeQueue.studentsOrTeachersInQueue(cafeQueue.head , true);}
+    int hungryTeachers(queue cafeQueue){return cafeQueue.hungryTeachers() + cafeQueue.studentsOrTeachersInQueue(cafeQueue.head , false);}
+    
+    String averageWaitTime(int totalWaitTime , int servedStudents){ //this formats average wait time: mm:ss
+        int totalSeconds = totalWaitTime / servedStudents; 
         int secondsInt = totalSeconds % 60;
         String seconds = String.valueOf(secondsInt);
         if (secondsInt < 10) seconds = "0" + seconds; //2 seconds will be shown as 0:02 not 0:2
