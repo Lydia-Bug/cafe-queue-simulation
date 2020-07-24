@@ -1,6 +1,4 @@
 import java.util.*;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 public class cafe
 {
     double amountConstant;
@@ -26,11 +24,9 @@ public class cafe
         System.out.println("Average wait time: " + averageWaitTime + " mins");
     }
     
-    private static DecimalFormat df = new DecimalFormat("0.00");
-    
     double averageWaitTime(int totalWaitTime , int notHungryStudents){
-        
-        double n = (totalWaitTime / notHungryStudents) / 60.00;
+        //this rounds average wait time (value is multiplied by 100, rounded, then divided my 100
+        double n = (Math.round(((totalWaitTime / notHungryStudents) / 60.00)*100))/100.0; 
         return n;
     }
     
