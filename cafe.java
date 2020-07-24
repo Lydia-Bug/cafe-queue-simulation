@@ -19,15 +19,16 @@ public class cafe
         int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLength(cafeQueue.head);
         System.out.println("Hungry students: " + hungryStudents);
         System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        
-        double averageWaitTime = averageWaitTime(cafeQueue.totalWaitTime() , cafeQueue.notHungryStudents());
-        System.out.println("Average wait time: " + averageWaitTime + " mins");
+        String averageWaitTime = averageWaitTime(cafeQueue.totalWaitTime() , cafeQueue.notHungryStudents());
+        System.out.println("Average wait time: " + averageWaitTime);
     }
     
-    double averageWaitTime(int totalWaitTime , int notHungryStudents){
-        //this rounds average wait time (value is multiplied by 100, rounded, then divided my 100
-        double n = (Math.round(((totalWaitTime / notHungryStudents) / 60.00)*100))/100.0; 
-        return n;
+    String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
+        int totalSeconds = totalWaitTime / notHungryStudents; 
+        int seconds = totalSeconds % 60; 
+        int minutes = (totalSeconds - seconds)/60;
+        String averageWaitTime = minutes +":"+seconds;
+        return averageWaitTime;
     }
     
     void askVariables(){
