@@ -23,7 +23,7 @@ public class queue
         tail = queuer; //sets last in queue to them
     }
     
-    boolean isStudent(boolean teachersCut , int StudentsPerTeachers){ //finds whether teach or student is added
+    boolean isStudent(int StudentsPerTeachers){ //finds whether teach or student is added
         Random rand = new Random(); 
         int n = (rand.nextInt(StudentsPerTeachers))+1;
         if(n >= StudentsPerTeachers) {
@@ -35,26 +35,29 @@ public class queue
     
     void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , int StudentsPerTeachers ){ //adds individual queuers
         person queuer; //creates queuer variable
-        if(!isStudent(teachersCut , StudentsPerTeachers)){ ///creates teacher
-            queuer = new person(false, startTime);
-            if(head == null){ 
-                addFirstPerson(queuer);
-            }else{
-                second = head; //makes first in queue, second in queue
-                head = queuer; //puts teacher in head of queue
-                queuer.addfollower(second); //adds second as follower to head
-            }
-        }
-        if(isStudent(teachersCut , StudentsPerTeachers)){//creates student
-            queuer = new person(true, startTime); 
-            if(head == null){ //if queue is empty
-                addFirstPerson(queuer);
-            }else{
-                if(QueueLength(head) < maxQueueLength){ //checks queue length 
-                    tail.addfollower(queuer); //adds them to end of queue
-                    tail = tail.follower(); //sets last in queue to them
+        if(teachersCut){
+            if(!isStudent(StudentsPerTeachers)){
+                queuer = new person(false, startTime);
+                if(head == null){ 
+                    addFirstPerson(queuer);
                 }else{
-                    hungryStudents++;
+                    second = head; //makes first in queue, second in queue
+                    head = queuer; //puts teacher in head of queue
+                    queuer.addfollower(second); //adds second as follower to head
+                }
+            }
+        }else{
+            if(isStudent(StudentsPerTeachers)){
+                queuer = new person(true, startTime); 
+                if(head == null){ //if queue is empty
+                    addFirstPerson(queuer);
+                }else{
+                    if(QueueLength(head) < maxQueueLength){ //checks queue length 
+                        tail.addfollower(queuer); //adds them to end of queue
+                        tail = tail.follower(); //sets last in queue to them
+                    }else{
+                        hungryStudents++;
+                    }
                 }
             }
         }
