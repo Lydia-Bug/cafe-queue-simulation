@@ -24,16 +24,12 @@ public class queue
     }
     
     boolean isStudent(boolean teachersCut , int StudentsPerTeachers){ //finds whether teach or student is added
-        if(teachersCut == true){
-            Random rand = new Random(); 
-            int n = (rand.nextInt(StudentsPerTeachers))+1;
-            if(n >= StudentsPerTeachers) {
-                return false;
-            } else {   
-                return true;
-            }
-        } else {
-            return true; 
+        Random rand = new Random(); 
+        int n = (rand.nextInt(StudentsPerTeachers))+1;
+        if(n >= StudentsPerTeachers) {
+            return false; //is teacher
+        } else {   
+            return true; // is student
         }
     }
     

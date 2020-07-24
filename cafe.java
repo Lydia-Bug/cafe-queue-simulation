@@ -25,8 +25,10 @@ public class cafe
     
     String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
         int totalSeconds = totalWaitTime / notHungryStudents; 
-        int seconds = totalSeconds % 60; 
-        int minutes = (totalSeconds - seconds)/60;
+        int secondsInt = totalSeconds % 60;
+        String seconds = String.valueOf(secondsInt);
+        if (secondsInt < 10) seconds = "0" + seconds; //2 seconds will be shown as 0:02 not 0:2
+        int minutes = (totalSeconds - secondsInt)/60;
         String averageWaitTime = minutes +":"+seconds;
         return averageWaitTime;
     }
