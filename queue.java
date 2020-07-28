@@ -9,15 +9,17 @@ public class queue
    
     int hungryStudents;
     int hungryTeachers;
-    int servedStudents;
-    int servedTeachers;
+    int notHungryStudents;
+    int notHungryTeachers;
+    int totalWaitTimeStudents;
+    int totalWaitTimeTeachers;
     int timeBeingServed;
-    int totalWaitTime;
     
     public queue(){
         head = null;
         tail = null;
-        totalWaitTime = 0;
+        totalWaitTimeStudents = 0;
+        totalWaitTimeTeachers = 0;
     }
     
     void addFirstPerson(person queuer){ 
@@ -37,9 +39,10 @@ public class queue
     
     void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , int StudentsPerTeachers ){ //adds individual queuers
         person queuer; //creates queuer variable
-        if(teachersCut){
-            if(!isStudent(StudentsPerTeachers)){
-                queuer = new person(false, startTime);
+        boolean isStudent = isStudent(StudentsPerTeachers);
+        if(teachersCut == true && !isStudent){//if its a teacher that can cut
+            if(!isStudent){ ///creates teacher
+                queuer = new person(isStudent, startTime);
                 if(head == null){ 
                     addFirstPerson(queuer);
                 }else{
@@ -49,8 +52,7 @@ public class queue
                 }
             }
         }else{
-            boolean isStudent = isStudent(StudentsPerTeachers);
-            queuer = new person(isStudent, startTime);
+            queuer = new person(isStudent, startTime); 
             if(head == null){ //if queue is empty
                 addFirstPerson(queuer);
             }else{
@@ -58,8 +60,8 @@ public class queue
                     tail.addfollower(queuer); //adds them to end of queue
                     tail = tail.follower(); //sets last in queue to them
                 }else{
-                    if (isStudent = true) hungryStudents++;
-                    if (isStudent = false) hungryTeachers++;
+                    if(isStudent)hungryStudents++;
+                    if(!isStudent)hungryTeachers++;
                 }
             }
         }
@@ -74,13 +76,14 @@ public class queue
         return queueLength;
     }
     
-    int studentsOrTeachersInQueue(person t, boolean isStudents){ //method for finding queue length
-        int studentsOrTeachersInQueue = 0;
+    int QueueLengthPeople(person t , boolean isStudent){ //method for finding queue length
+        int queueLengthPeople = 0;
         while (t != null){
-            if(t.isStudent() == isStudents)studentsOrTeachersInQueue++;
+            
             t=t.follower();
+            queueLengthPeople++;
         }
-        return studentsOrTeachersInQueue;
+        return queueLengthPeople;
     }
     
     int servePerson(int timeBeingServed){
@@ -96,7 +99,6 @@ public class queue
                 }
             }
             return 0; //serving time is reset to 0;
-        
         } else{
             return timeBeingServed;
         }
@@ -104,16 +106,16 @@ public class queue
     
     void finishServing(int endTime, int timeBeingServed , int servingTime){
         if(timeBeingServed >= servingTime){
-            timeBeingServed = 0;
-            if(served.isStudent() == true)  {
-                servedStudents++;
-                totalWaitTime += (endTime - served.startTime());
+            if(served.isStudent() == true){
+                totalWaitTimeStudents += (endTime - served.startTime());
+                notHungryStudents++;
             }
-            if(served.isStudent() == false) { 
-                servedTeachers++;
-                totalWaitTime += (endTime - served.startTime());
+            if(served.isStudent() == false){
+                totalWaitTimeTeachers += (endTime - served.startTime());
+                notHungryTeachers++;
             }
             served = null;
+            timeBeingServed = 0;
         }
     }
     
@@ -129,17 +131,20 @@ public class queue
     int hungryStudents(){
         return hungryStudents;
     }
-    int servedStudents(){
-        return servedStudents;
-    }
     int hungryTeachers(){
         return hungryTeachers;
     }
-    int servedTeachers(){
-        return servedTeachers;
+    int notHungryStudents(){
+        return notHungryStudents;
     }
-    int totalWaitTime(){
-        return totalWaitTime;
+    int notHungryTeachers(){
+        return notHungryTeachers;
+    }
+    int totalWaitTimeStudents(){
+        return totalWaitTimeStudents;
+    }
+    int totalWaitTimeTeachers(){
+        return totalWaitTimeTeachers;
     }
     person head(){
         return head;
