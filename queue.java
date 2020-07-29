@@ -79,9 +79,8 @@ public class queue
     int QueueLengthPeople(person t , boolean isStudent){ //method for finding queue length
         int queueLengthPeople = 0;
         while (t != null){
-            
+            if  (t.isStudent() == isStudent)  queueLengthPeople++;
             t=t.follower();
-            queueLengthPeople++;
         }
         return queueLengthPeople;
     }
