@@ -26,7 +26,7 @@ public class queue
         head = queuer; //sets first in queue to them
         tail = queuer; //sets last in queue to them
     }
-    
+    /*
     boolean isStudent(int StudentsPerTeachers){ //finds whether teach or student is added
         Random rand = new Random(); 
         int n = (rand.nextInt(StudentsPerTeachers))+1;
@@ -36,10 +36,9 @@ public class queue
             return true; // is student
         }
     }
-    
-    void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , int StudentsPerTeachers ){ //adds individual queuers
+    */
+    void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , boolean isStudent){ //adds individual queuers
         person queuer; //creates queuer variable
-        boolean isStudent = isStudent(StudentsPerTeachers);
         if(teachersCut == true && !isStudent){//if its a teacher that can cut
             if(!isStudent){ ///creates teacher
                 queuer = new person(isStudent, startTime);

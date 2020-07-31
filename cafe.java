@@ -6,6 +6,7 @@ public class cafe
     int maxQueueLength;
     int servingTime; //should this be random???
     boolean teachersCut;
+    boolean simulate;
     
     public cafe(){
         queue cafeQueue = new queue();
@@ -40,10 +41,16 @@ public class cafe
     
     void askVariables(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter student constant: ");
-        amountConstant = scan.nextDouble();
-        System.out.println("Enter amount of students per one teacher: ");
-        StudentsPerTeachers = scan.nextInt();
+        System.out.println("Do you want to simulate or read in the queue");
+        String simulateTemp = scan.nextLine();
+        if(simulateTemp == "simulate")  simulate = true;
+        if(simulateTemp == "read")  simulate = false;
+        if(simulate == true){
+            System.out.println("Enter student constant: ");
+            amountConstant = scan.nextDouble();
+            System.out.println("Enter amount of students per one teacher: ");
+            StudentsPerTeachers = scan.nextInt();        
+        }
         System.out.println("Enter maximum queue length that students will join: ");
         maxQueueLength = scan.nextInt();
         System.out.println("Enter serving time: ");
@@ -54,11 +61,19 @@ public class cafe
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
+        readIn file = new readIn();
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            for(int j = 0; j < queuersAdded(amountConstant, i); j++){ 
-                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , StudentsPerTeachers ); 
+            for(int j = 0; j < file.students(i); j++){ //add students
+                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); 
             }
-            
+            for(int j = 0; j < file.teachers(i); j++){ //add teachers
+                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , false); 
+            }
+            /*
+            for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
+                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); 
+            }
+            */
             timeBeingServed++; //keeps track of how long someone is being served
             timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             cafeQueue.finishServing(i, timeBeingServed, servingTime);
@@ -79,5 +94,15 @@ public class cafe
         if(chanceJoining > n) numberJoining ++; //adds one more person if so
         
         return numberJoining;
+    }
+    
+    boolean isStudent(){ //finds whether teach or student is added
+        Random rand = new Random(); 
+        int n = (rand.nextInt(StudentsPerTeachers))+1;
+        if(n >= StudentsPerTeachers) {
+            return false; //is teacher
+        } else {   
+            return true; // is student
+        }
     }
 }
