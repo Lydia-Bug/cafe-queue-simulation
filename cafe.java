@@ -43,8 +43,8 @@ public class cafe
         Scanner scan = new Scanner(System.in);
         System.out.println("Do you want to simulate or read in the queue");
         String simulateTemp = scan.nextLine();
-        if(simulateTemp == "simulate")  simulate = true;
-        if(simulateTemp == "read")  simulate = false;
+        if(simulateTemp.equals("simulate")) simulate = true;
+        if(simulateTemp.equals("read"))  simulate = false;
         if(simulate == true){
             System.out.println("Enter student constant: ");
             amountConstant = scan.nextDouble();
@@ -63,17 +63,18 @@ public class cafe
         int timeBeingServed = 0;
         readIn file = new readIn();
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            for(int j = 0; j < file.students(i); j++){ //add students
-                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); 
+            if(simulate == true){
+                for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); 
+                }
+            }else{
+                for(int j = 0; j < file.students(i); j++){ //add students
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); 
+                }
+                for(int j = 0; j < file.teachers(i); j++){ //add teachers
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , false); 
+                }
             }
-            for(int j = 0; j < file.teachers(i); j++){ //add teachers
-                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , false); 
-            }
-            /*
-            for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
-                cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); 
-            }
-            */
             timeBeingServed++; //keeps track of how long someone is being served
             timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
             cafeQueue.finishServing(i, timeBeingServed, servingTime);
