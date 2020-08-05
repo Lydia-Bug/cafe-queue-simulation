@@ -7,6 +7,7 @@ public class cafe
     int servingTime; //should this be random???
     boolean teachersCut;
     boolean simulate;
+    String filename;
     
     public cafe(){
         queue cafeQueue = new queue();
@@ -50,6 +51,9 @@ public class cafe
             amountConstant = scan.nextDouble();
             System.out.println("Enter amount of students per one teacher: ");
             StudentsPerTeachers = scan.nextInt();        
+        }else{ //if reading in
+            System.out.println("What file do you want to read in? ");
+            filename = scan.nextLine();
         }
         System.out.println("Enter maximum queue length that students will join: ");
         maxQueueLength = scan.nextInt();
@@ -61,7 +65,7 @@ public class cafe
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
-        readIn file = new readIn();
+        readIn file = new readIn(filename);
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             if(simulate == true){
                 for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added

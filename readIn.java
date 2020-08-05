@@ -3,11 +3,10 @@ import java.io.IOException;
 import java.io.File;
 public class readIn
 {
-    final String filename = "arrivals.csv";
     final int MAXLINES = 3600;
     final int VALUESPERLINE = 3;
     String AllLinesAllElements[][] = new String[MAXLINES][VALUESPERLINE];
-    public readIn(){
+    public readIn(String filename){
         File thefile = new File(filename);
         String CSVlines[] = new String[MAXLINES];
         
