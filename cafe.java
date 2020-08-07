@@ -7,7 +7,7 @@ public class cafe
     int servingTime; //should this be random???
     boolean teachersCut;
     boolean simulate;
-    String filename;
+    String filename = null;
     
     public cafe(){
         queue cafeQueue = new queue();
@@ -19,8 +19,8 @@ public class cafe
     
     void outputvariables(queue cafeQueue){
         int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLengthPeople(cafeQueue.head , true);
-        int hungryTeachers = cafeQueue.hungryTeachers() + cafeQueue.QueueLengthPeople(cafeQueue.head , false);
         System.out.println("Hungry students: " + hungryStudents);
+        int hungryTeachers = cafeQueue.hungryTeachers() + cafeQueue.QueueLengthPeople(cafeQueue.head , false);
         System.out.println("Hungry teachers: " + hungryTeachers);
         System.out.println("Served students: " + cafeQueue.notHungryStudents());
         System.out.println("Served teachers: " + cafeQueue.notHungryTeachers());
@@ -65,7 +65,7 @@ public class cafe
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
-        readIn file = new readIn(filename);
+        readIn file = new readIn(filename , simulate);
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             if(simulate == true){
                 for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
