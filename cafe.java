@@ -63,8 +63,14 @@ public class cafe
             System.out.println("Enter amount of students per one teacher: ");
             StudentsPerTeachers = scan.nextInt();        
         }else{ //if reading in
-            System.out.println("What file do you want to read in? ");
-            filename = scan.nextLine();
+            correct = false;
+            readIn file = new readIn();
+            while(correct == false){
+                System.out.println("What file do you want to read in? ");
+                filename = scan.nextLine();
+                correct = file.fileExists(filename);
+                if (correct == false)    System.out.println("Please enter valid file name make sure to include '.csv'");
+            }
         }
         
         System.out.println("Enter maximum queue length that students will join: ");
@@ -77,13 +83,14 @@ public class cafe
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
-        readIn file = new readIn(filename , simulate);
+        readIn file = new readIn();
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
             if(simulate == true){
                 for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
                     cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); 
                 }
             }else{
+                file.readInFile(filename);
                 for(int j = 0; j < file.students(i); j++){ //add students
                     cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); 
                 }
