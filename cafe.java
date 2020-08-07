@@ -42,10 +42,21 @@ public class cafe
     
     void askVariables(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Do you want to simulate or read in the queue");
-        String simulateTemp = scan.nextLine();
-        if(simulateTemp.equals("simulate")) simulate = true;
-        if(simulateTemp.equals("read"))  simulate = false;
+        boolean correct = false;
+        while(correct == false){
+            System.out.println("Do you want to simulate or read in the queue");
+            String simulateTemp = scan.nextLine();
+            if(simulateTemp.equals("simulate")) {
+                simulate = true;
+                correct = true;
+            }   else if (simulateTemp.equals("read")){  
+                simulate = false;
+                correct = true;
+            }   else{
+                correct = false;
+                System.out.println("Please type either simulate or read");
+            }
+        }  
         if(simulate == true){
             System.out.println("Enter student constant: ");
             amountConstant = scan.nextDouble();
@@ -55,6 +66,7 @@ public class cafe
             System.out.println("What file do you want to read in? ");
             filename = scan.nextLine();
         }
+        
         System.out.println("Enter maximum queue length that students will join: ");
         maxQueueLength = scan.nextInt();
         System.out.println("Enter serving time: ");
