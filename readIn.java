@@ -48,9 +48,13 @@ public class readIn
             return false;
         }
     }
-    void fileIsCSV(String filename){
+    boolean fileIsCSV(String filename){ //checks if file is csv
         String fileExtension = filename.substring(filename.length() - 4); //finds file extension
-        
+        if(fileExtension.equals(".csv")){
+            return true;
+        }else{
+            return false;
+        }
     }
     int students(int i){
         return Integer.parseInt(AllLinesAllElements[i][1]);

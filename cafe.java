@@ -68,8 +68,15 @@ public class cafe
             while(correct == false){
                 System.out.println("What file do you want to read in? ");
                 filename = scan.nextLine();
-                correct = file.fileExists(filename);
-                if (correct == false)    System.out.println("Please enter valid file name make sure to include '.csv'");
+                boolean fileExists = file.fileExists(filename);
+                boolean isCSV = file.fileIsCSV(filename);
+                if(fileExists == false){
+                    System.out.println("Please enter valid file name make sure to include '.csv'");
+                }else if(isCSV == false){
+                    System.out.println("Please enter valid file, this programe only excepts csv formate");
+                }else{
+                   correct = true; 
+                }
             }
         }
         
