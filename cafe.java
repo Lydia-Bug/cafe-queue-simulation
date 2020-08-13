@@ -81,6 +81,9 @@ public class cafe
         }
         
         System.out.println("Enter maximum queue length that students will join: ");
+        correct = false;
+            while(correct == false){
+            }
         maxQueueLength = scan.nextInt();
         System.out.println("Enter serving time: ");
         servingTime = scan.nextInt();
