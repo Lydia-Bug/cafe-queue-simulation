@@ -52,16 +52,16 @@ public class queue
             }
         }else{
             queuer = new person(isStudent, startTime); 
-            if(head == null){ //if queue is empty
-                addFirstPerson(queuer);
-            }else{
-                if(QueueLength(head) < maxQueueLength){ //checks queue length 
+            if(QueueLength(head) < maxQueueLength){ //checks queue length 
+                if(head == null){ //if queue is empty
+                    addFirstPerson(queuer);
+                }else{
                     tail.addfollower(queuer); //adds them to end of queue
                     tail = tail.follower(); //sets last in queue to them
-                }else{
-                    if(isStudent)hungryStudents++;
-                    if(!isStudent)hungryTeachers++;
                 }
+            }else{
+                if(isStudent)hungryStudents++;
+                if(!isStudent)hungryTeachers++;
             }
         }
     }

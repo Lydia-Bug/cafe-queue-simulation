@@ -49,6 +49,7 @@ public class readIn
         }
     }
     boolean fileIsCSV(String filename){ //checks if file is csv
+        if(filename.length() < 4)   return false;
         String fileExtension = filename.substring(filename.length() - 4); //finds file extension
         if(fileExtension.equals(".csv")){
             return true;

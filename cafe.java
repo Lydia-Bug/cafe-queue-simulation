@@ -31,6 +31,9 @@ public class cafe
     }
     
     String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
+        if (notHungryStudents == 0){
+            return "No one was served";
+        }
         int totalSeconds = totalWaitTime / notHungryStudents; 
         int secondsInt = totalSeconds % 60;
         String seconds = String.valueOf(secondsInt);
@@ -43,8 +46,8 @@ public class cafe
     void askVariables(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
+        System.out.println("Do you want to simulate or read in the queue");
         while(correct == false){
-            System.out.println("Do you want to simulate or read in the queue");
             String simulateTemp = scan.nextLine();
             if(simulateTemp.equals("simulate")) {
                 simulate = true;
@@ -82,14 +85,52 @@ public class cafe
         
         System.out.println("Enter maximum queue length that students will join: ");
         correct = false;
-            while(correct == false){
+        while(correct == false){
+            String tempMaxQueueLength = scan.nextLine();
+            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
+               maxQueueLength = Integer.parseInt(tempMaxQueueLength);
+               if (maxQueueLength < 0){
+                   System.out.println("Please enter a number that isn't negitive");
+               }else{
+                    correct = true;
+               }
+            }catch (NumberFormatException e){
+                System.out.println("Please enter a number");
             }
-        maxQueueLength = scan.nextInt();
+        }
+        
         System.out.println("Enter serving time: ");
-        servingTime = scan.nextInt();
+        correct = false;
+        while(correct == false){
+            String tempServingTime = scan.nextLine();
+            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
+               servingTime = Integer.parseInt(tempServingTime);
+               if (servingTime < 1){
+                   System.out.println("Please enter a positive number");
+               }else{
+                    correct = true;
+               }
+            }catch (NumberFormatException e){
+                System.out.println("Please enter a number");
+            }
+        }
+        
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
-        teachersCut = scan.nextBoolean();
+        correct = false;
+        while(correct == false){
+            String tempTeachersCut = scan.nextLine();
+            if(tempTeachersCut.equals("true"))  {
+                teachersCut = true;
+                correct = true;
+            }else if(tempTeachersCut.equals("false")){
+                teachersCut = false;
+                correct = true;
+            }else{
+                System.out.println("Please enter either true or false");
+            }
+        }
     }
+    
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
