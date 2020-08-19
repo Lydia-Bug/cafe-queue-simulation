@@ -16,12 +16,14 @@ public class readIn
         int linecount = 0;
         try{
             Scanner reader = new Scanner(thefile);
+            //reads in CSV as lines of strings
             while (reader.hasNextLine() && linecount < MAXLINES){
                 String line = reader.nextLine();
                 CSVlines[linecount] = line;
                 linecount++;
             }
             
+            //coverts lines of strings to ints
             for (int i = 0; i<linecount; i++){
                 String values[] = CSVlines[i].split(",");
                 for (int j = 0; j < values.length; j++){
@@ -30,6 +32,32 @@ public class readIn
             }
         } catch (IOException e) {System.out.println(e);}
     }
+    //reads the file as lines of string to check format
+    //also reads in file so I can check the rows afterwards
+    boolean checkColumbs(String filename){
+        File thefile = new File(filename);
+        String CSVlines[] = new String[MAXLINES];
+        int linecount = 0;
+        try{
+            Scanner reader = new Scanner(thefile);
+            //reads in CSV as strings
+            while (reader.hasNextLine() && linecount < MAXLINES){ 
+                String line = reader.nextLine();
+                CSVlines[linecount] = line;
+                linecount++;
+            }
+            //convers lines of strings to ints
+            for (int i = 0; i<linecount; i++){ 
+                String values[] = CSVlines[i].split(",");
+                if(values.length > 2)return false; //checks there are only 2 columbs
+                for (int j = 0; j < values.length; j++){
+                    AllLinesAllElements[i][j] = values[j];
+                }
+            }
+        } catch (IOException e) {System.out.println(e);}
+        return true;
+    }
+    
     //checks if file exists
     boolean fileExists(String filename){
         File thefile = new File(filename);
@@ -49,9 +77,9 @@ public class readIn
             return false;
         }
     }
-    //checks the format of the contents of the CSV file
-    boolean checkFormat(){
-        int n;
+    
+    boolean checkRows(){
+    int n;
         for(int i = 1; i<(3600); i++){
             try { //checks values are ints, and that there are no less then 3600 rows
                n = Integer.parseInt(AllLinesAllElements[i][0]);
@@ -60,14 +88,14 @@ public class readIn
                 return false;
             }
         }
-        try { //sees if there is a 3601st row
-            n = Integer.parseInt(AllLinesAllElements[3600][0]);
-            n = Integer.parseInt(AllLinesAllElements[3600][1]);
-            return false;
+        for(int i = 0; i<2; i++){
+            try { //sees if there is a 3601st row
+                n = Integer.parseInt(AllLinesAllElements[3600][i]);
+                return false;
             }catch (NumberFormatException e){}
+        }
         return true;
     }
-    
     //returns if student is being added for certain time
     int students(int i){
         return Integer.parseInt(AllLinesAllElements[i][0]);

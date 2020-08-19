@@ -128,25 +128,18 @@ public class cafe
     String checkCSV(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
-        readIn file = new readIn();
         String value = null;
         while(correct == false){ //loop will keep running until valid response
             value = scan.nextLine();
-            boolean fileExists = file.fileExists(value); //checks file does exist
-            boolean isCSV = file.fileIsCSV(value); //checks file is a CSV file
-            
-            if(fileExists == false){
+            if(file.fileExists(value) == false){//if the files does exist
                 System.out.println("Please enter valid file name make sure to include '.csv'");
-            }else if(isCSV == false){
+            }else if(file.fileIsCSV(value) == false){//if the file is a CSV file
                 System.out.println("Please enter valid file, this programe only excepts csv formate");
-            }else{ //if the file is a real CSV file, it will read it in to check it
-               file.readInFile(value);
-               if(file.checkFormat() == true){ //checks all ints, and amount of rows is correct
-                   correct = true; 
-               }else{
-                   System.out.println("File doesn't have correct formate: 3600 rows, 2 comumbs, and all ints");
-               }
-            }
+            }else if(file.checkColumbs(value) == false){ //checks there is only two columbs
+                System.out.println("Please enter file with only two columbs");
+            }else if (file.checkRows() == false){//checks amount of rows, and that all values are ints
+                System.out.println("File must have 3600 columbs, and all ints");
+            }else{correct = true;}
         }
         return value;
     }
