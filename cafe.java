@@ -44,52 +44,94 @@ public class cafe
     }
     
     void askVariables(){
+        System.out.println("Do you want to simulate or read in the queue");
+        simulate = checkSimulateOrRead();
+        if(simulate == true){
+            System.out.println("Enter student constant: ");
+            amountConstant = checkNegativeDouble();
+            System.out.println("Enter amount of students per one teacher: ");
+            StudentsPerTeachers = checkNegativeNumber();  
+        }else{ //if reading in
+            System.out.println("What file do you want to read in? ");
+            filename = checkCSV();
+        }
+        System.out.println("Enter maximum queue length that students will join: ");
+        maxQueueLength = checkNegativeNumber();
+        System.out.println("Enter serving time: ");
+        servingTime = checkNumberAboveZero();
+        System.out.println("Can teachers cut to front of queue? (true if yes)" );
+        teachersCut = checkIsBoolean();
+    }
+    
+    boolean checkSimulateOrRead(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
-        System.out.println("Do you want to simulate or read in the queue");
+        boolean value = true;
         while(correct == false){
-            String simulateTemp = scan.nextLine();
-            if(simulateTemp.equals("simulate")) {
-                simulate = true;
+            String tempValue = scan.nextLine();
+            if(tempValue.equals("simulate")) {
+                value= true;
                 correct = true;
-            }   else if (simulateTemp.equals("read")){  
-                simulate = false;
+            }   else if (tempValue.equals("read")){  
+                value = false;
                 correct = true;
             }   else{
                 correct = false;
                 System.out.println("Please type either simulate or read");
             }
         }  
-        if(simulate == true){
-            System.out.println("Enter student constant: ");
-            amountConstant = scan.nextDouble();
-            System.out.println("Enter amount of students per one teacher: ");
-            StudentsPerTeachers = scan.nextInt();        
-        }else{ //if reading in
-            correct = false;
-            readIn file = new readIn();
-            while(correct == false){
-                System.out.println("What file do you want to read in? ");
-                filename = scan.nextLine();
-                boolean fileExists = file.fileExists(filename);
-                boolean isCSV = file.fileIsCSV(filename);
-                if(fileExists == false){
-                    System.out.println("Please enter valid file name make sure to include '.csv'");
-                }else if(isCSV == false){
-                    System.out.println("Please enter valid file, this programe only excepts csv formate");
-                }else{
-                   correct = true; 
-                }
+        return value;
+    }
+    
+    int checkNegativeNumber(){
+        Scanner scan = new Scanner(System.in);
+        boolean correct = false;
+        int value = 0;
+        while(correct == false){
+            String tempValue = scan.nextLine();
+            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
+               value = Integer.parseInt(tempValue);
+               if (value < 0){
+                   System.out.println("Please enter a number that isn't negitive");
+               }else{
+                    correct = true;
+               }
+            }catch (NumberFormatException e){
+                System.out.println("Please enter a whole number");
             }
         }
-        
-        System.out.println("Enter maximum queue length that students will join: ");
-        correct = false;
+        return value;
+    }
+    
+    int checkNumberAboveZero(){
+        Scanner scan = new Scanner(System.in);
+        boolean correct = false;
+        int value = 0;
         while(correct == false){
-            String tempMaxQueueLength = scan.nextLine();
+            String tempValue = scan.nextLine();
             try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               maxQueueLength = Integer.parseInt(tempMaxQueueLength);
-               if (maxQueueLength < 0){
+               value = Integer.parseInt(tempValue);
+               if (value < 1){
+                   System.out.println("Please enter a positive number");
+               }else{
+                    correct = true;
+               }
+            }catch (NumberFormatException e){
+                System.out.println("Please enter a whole number");
+            }
+        }
+        return value;
+    }
+    
+    double checkNegativeDouble(){
+        Scanner scan = new Scanner(System.in);
+        boolean correct = false;
+        double value = 0;
+        while(correct == false){
+            String tempValue = scan.nextLine();
+            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
+               value = Double.parseDouble(tempValue);
+               if (value < 0){
                    System.out.println("Please enter a number that isn't negitive");
                }else{
                     correct = true;
@@ -98,39 +140,47 @@ public class cafe
                 System.out.println("Please enter a number");
             }
         }
-        
-        System.out.println("Enter serving time: ");
-        correct = false;
+        return value;
+    }
+    
+    String checkCSV(){
+        Scanner scan = new Scanner(System.in);
+        boolean correct = false;
+        readIn file = new readIn();
+        String value = null;
         while(correct == false){
-            String tempServingTime = scan.nextLine();
-            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               servingTime = Integer.parseInt(tempServingTime);
-               if (servingTime < 1){
-                   System.out.println("Please enter a positive number");
-               }else{
-                    correct = true;
-               }
-            }catch (NumberFormatException e){
-                System.out.println("Please enter a number");
+            value = scan.nextLine();
+            boolean fileExists = file.fileExists(value);
+            boolean isCSV = file.fileIsCSV(value);
+            if(fileExists == false){
+                System.out.println("Please enter valid file name make sure to include '.csv'");
+            }else if(isCSV == false){
+                System.out.println("Please enter valid file, this programe only excepts csv formate");
+            }else{
+               correct = true; 
             }
         }
-        
-        System.out.println("Can teachers cut to front of queue? (true if yes)" );
-        correct = false;
+        return value;
+    }
+    
+    boolean checkIsBoolean(){
+        Scanner scan = new Scanner(System.in);
+        boolean correct = false;
+        boolean value = true;
         while(correct == false){
-            String tempTeachersCut = scan.nextLine();
-            if(tempTeachersCut.equals("true"))  {
-                teachersCut = true;
+            String tempValue = scan.nextLine();
+            if(tempValue.equals("true"))  {
+                value = true;
                 correct = true;
-            }else if(tempTeachersCut.equals("false")){
-                teachersCut = false;
+            }else if(tempValue.equals("false")){
+                value = false;
                 correct = true;
             }else{
                 System.out.println("Please enter either true or false");
             }
         }
+        return value;
     }
-    
     
     void modelQueue(double amountConstant , queue cafeQueue){
         int timeBeingServed = 0;
