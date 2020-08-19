@@ -1,3 +1,4 @@
+
 import java.util.*;
 public class cafe
 {
@@ -99,7 +100,7 @@ public class cafe
                     correct = true;
                }
             }catch (NumberFormatException e){
-                System.out.println("Please enter a whole number");
+                System.out.println("Please enter a whole number under 2147483647");
             }
         }
         return value;
@@ -119,7 +120,7 @@ public class cafe
                     correct = true;
                }
             }catch (NumberFormatException e){
-                System.out.println("Please enter a whole number");
+                System.out.println("Please enter a whole number under 2147483647");
             }
         }
         return value;
@@ -155,13 +156,17 @@ public class cafe
             boolean fileExists = file.fileExists(value);
             boolean isCSV = file.fileIsCSV(value);
             
-            
             if(fileExists == false){
                 System.out.println("Please enter valid file name make sure to include '.csv'");
             }else if(isCSV == false){
                 System.out.println("Please enter valid file, this programe only excepts csv formate");
             }else{
-               correct = true; 
+               file.readInFile(value);
+               if(file.checkFormat() == true){
+                   correct = true; 
+               }else{
+                   System.out.println("File doesn't have correct formate: 3600 rows, 2 comumbs, and all ints");
+               }
             }
         }
         return value;

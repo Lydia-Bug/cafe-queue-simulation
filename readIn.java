@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.File;
 public class readIn
 {
-    final int MAXLINES = 3600;
+    final int MAXLINES = 3601; //reads in one more line then nessacery so I can check if it has values
     final int VALUESPERLINE = 2;
     String AllLinesAllElements[][] = new String[MAXLINES][VALUESPERLINE];
     public readIn(){
@@ -17,7 +17,6 @@ public class readIn
         
         try{
             Scanner reader = new Scanner(thefile);
-            
             while (reader.hasNextLine() && linecount < MAXLINES){
                 String line = reader.nextLine();
                 CSVlines[linecount] = line;
@@ -62,14 +61,22 @@ public class readIn
     int teachers(int i){
         return Integer.parseInt(AllLinesAllElements[i][1]);
     }
-    /*
+    
     boolean checkFormat(){
+        int n;
         for(int i = 1; i<(3600); i++){
-            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               
+            try { 
+               n = Integer.parseInt(AllLinesAllElements[i][0]);
+               n = Integer.parseInt(AllLinesAllElements[i][1]);
             }catch (NumberFormatException e){
-                
+                return false;
             }
         }
-    }*/
+        try { //sees if there is a 3601st row
+            n = Integer.parseInt(AllLinesAllElements[3600][0]);
+            n = Integer.parseInt(AllLinesAllElements[3600][1]);
+            return false;
+            }catch (NumberFormatException e){}
+        return true;
+    }
 }
