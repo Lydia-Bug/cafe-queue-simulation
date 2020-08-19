@@ -7,7 +7,7 @@ public class queue
     person second; //person second in queue (used as a placeholder for puting someone at head of queue)
     person served = null; //person in 'serving area'
    
-    int hungryStudents;
+    int hungryStudents; 
     int hungryTeachers;
     int notHungryStudents;
     int notHungryTeachers;
@@ -15,42 +15,36 @@ public class queue
     int totalWaitTimeTeachers;
     int timeBeingServed;
     
-    public queue(){
+    //creates queue
+    public queue(){ 
+        //creates empty queue, with no totalWaitTime
         head = null;
         tail = null;
         totalWaitTimeStudents = 0;
         totalWaitTimeTeachers = 0;
     }
     
+    //if there's no one in queue, and person added is added as head
     void addFirstPerson(person queuer){ 
         head = queuer; //sets first in queue to them
         tail = queuer; //sets last in queue to them
     }
-    /*
-    boolean isStudent(int StudentsPerTeachers){ //finds whether teach or student is added
-        Random rand = new Random(); 
-        int n = (rand.nextInt(StudentsPerTeachers))+1;
-        if(n >= StudentsPerTeachers) {
-            return false; //is teacher
-        } else {   
-            return true; // is student
-        }
-    }
-    */
+    
+    //method that will added queuers
     void addQueuers(int startTime , int maxQueueLength, boolean teachersCut , boolean isStudent){ //adds individual queuers
         person queuer; //creates queuer variable
         if(teachersCut == true && !isStudent){//if its a teacher that can cut
-            if(!isStudent){ ///creates teacher
-                queuer = new person(isStudent, startTime);
-                if(head == null){ 
+            if(!isStudent){ //if is a teacher
+                queuer = new person(isStudent, startTime); //creates teacher
+                if(head == null){ //if no one in queue, they'll be added to head
                     addFirstPerson(queuer);
-                }else{
+                }else{ //puts them in head of queue
                     second = head; //makes first in queue, second in queue
                     head = queuer; //puts teacher in head of queue
                     queuer.addfollower(second); //adds second as follower to head
                 }
             }
-        }else{
+        }else{ 
             queuer = new person(isStudent, startTime); 
             if(QueueLength(head) < maxQueueLength){ //checks queue length 
                 if(head == null){ //if queue is empty
@@ -59,34 +53,37 @@ public class queue
                     tail.addfollower(queuer); //adds them to end of queue
                     tail = tail.follower(); //sets last in queue to them
                 }
-            }else{
+            }else{ //if queue if too long
                 if(isStudent)hungryStudents++;
                 if(!isStudent)hungryTeachers++;
             }
         }
     }
     
+    //finds length of queue
     int QueueLength(person t){ //method for finding queue length
         int queueLength = 0;
-        while (t != null){
+        while (t != null){ //goes through queue and counts amount of followers
             t=t.follower();
             queueLength++;
         }
         return queueLength;
     }
     
+    //find amount of teachers or students in queue (used to find hungry people)
     int QueueLengthPeople(person t , boolean isStudent){ //method for finding queue length
         int queueLengthPeople = 0;
-        while (t != null){
+        while (t != null){ //goes through queue counting either all students or teachers
             if  (t.isStudent() == isStudent)  queueLengthPeople++;
             t=t.follower();
         }
         return queueLengthPeople;
     }
     
+    //this will place someone in 'serving area' to get served
     int servePerson(int timeBeingServed){
-        if (served == null){
-            if (head != null){
+        if (served == null){ //if no one else is being served
+            if (head != null){ //if someone is in queue
                 if(head.follower() == null){ //if no second person
                     served = head;
                     head = null;
@@ -102,14 +99,15 @@ public class queue
         }
     }
     
+    //this dequeues someone if the've spent the 'servingTime' being served
     void finishServing(int endTime, int timeBeingServed , int servingTime){
-        if(timeBeingServed >= servingTime){
+        if(timeBeingServed >= servingTime){ //if time being served is more then servingTime
             if(served.isStudent() == true){
-                totalWaitTimeStudents += (endTime - served.startTime());
+                totalWaitTimeStudents += (endTime - served.startTime()); //finds time spent in queue
                 notHungryStudents++;
             }
             if(served.isStudent() == false){
-                totalWaitTimeTeachers += (endTime - served.startTime());
+                totalWaitTimeTeachers += (endTime - served.startTime()); //finds time spent in queue
                 notHungryTeachers++;
             }
             served = null;
@@ -117,15 +115,7 @@ public class queue
         }
     }
     
-    void printQueue(person t){ //prints out queue
-        System.out.println("The queue consists of:");
-        while (t != null){
-            System.out.println(t.isStudent());
-            //System.out.println(t.myId());
-            t=t.follower();
-        }
-    }
-    
+    //returuns values, so cafe class can access them
     int hungryStudents(){
         return hungryStudents;
     }
