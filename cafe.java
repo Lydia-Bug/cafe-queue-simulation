@@ -2,75 +2,50 @@
 import java.util.*;
 public class cafe
 {
-    double amountConstant;
+    double amountConstant; //variable that I'll apply to the equation that calculates how many people are added
     int StudentsPerTeachers; //Student to teacher ratio
-    int maxQueueLength;
-    int servingTime; //should this be random???
-    boolean teachersCut;
-    boolean simulate;
-    String filename = null;
-    readIn file = new readIn();
+    int maxQueueLength; //max queue length
+    int servingTime; //time it takes someone to be served
+    boolean teachersCut; //can teachers cut (true) in front or not (false)
+    boolean simulate; //simulating queue (true) or reading in queue from CSV file (false)
+    String filename = null; //name of file
+    readIn file = new readIn(); //creates new file(class)
     
     public cafe(){
-        queue cafeQueue = new queue();
+        queue cafeQueue = new queue(); 
         askVariables();
-        modelQueue(amountConstant, cafeQueue); //adds the rest of the queue for the hour, 3 is a constant for formula
-        //cafeQueue.modelQueue(amountConstant);
+        modelQueue(amountConstant, cafeQueue);
         outputvariables(cafeQueue);
     }
     
-    void outputvariables(queue cafeQueue){
-        int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLengthPeople(cafeQueue.head , true);
-        System.out.println("Hungry students: " + hungryStudents);
-        int hungryTeachers = cafeQueue.hungryTeachers() + cafeQueue.QueueLengthPeople(cafeQueue.head , false);
-        System.out.println("Hungry teachers: " + hungryTeachers);
-        System.out.println("Served students: " + cafeQueue.notHungryStudents());
-        System.out.println("Served teachers: " + cafeQueue.notHungryTeachers());
-        String averageWaitTimeS = averageWaitTime(cafeQueue.totalWaitTimeStudents() , cafeQueue.notHungryStudents());
-        String averageWaitTimeT = averageWaitTime(cafeQueue.totalWaitTimeTeachers() , cafeQueue.notHungryTeachers());
-        System.out.println("Student average wait time: " + averageWaitTimeS);
-        System.out.println("Teacher average wait time: " + averageWaitTimeT);
-    }
-    
-    String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
-        if (notHungryStudents == 0){
-            return "No one was served";
-        }
-        int totalSeconds = totalWaitTime / notHungryStudents; 
-        int secondsInt = totalSeconds % 60;
-        String seconds = String.valueOf(secondsInt);
-        if (secondsInt < 10) seconds = "0" + seconds; //2 seconds will be shown as 0:02 not 0:2
-        int minutes = (totalSeconds - secondsInt)/60;
-        String averageWaitTime = minutes +":"+seconds;
-        return averageWaitTime;
-    }
-    
+    //asks user to enter all values for variables
     void askVariables(){
         System.out.println("Do you want to simulate or read in the queue");
-        simulate = checkSimulateOrRead();
-        if(simulate == true){
+        simulate = checkSimulateOrRead(); //checks if value is "simulation" or "read", and returns boolean value if so
+        if(simulate == true){ //asks for simulation requied variables
             System.out.println("Enter student constant: ");
-            amountConstant = checkNegativeDouble();
+            amountConstant = checkNegativeDouble(); //checks if number is negative, and returns value if so
             System.out.println("Enter amount of students per one teacher: ");
-            StudentsPerTeachers = checkNegativeNumber();  
-        }else{ //if reading in
+            StudentsPerTeachers = checkNegativeNumber();  //checks if number is negative, and returns value if so
+        }else{ //asks for reading in requied variables
             System.out.println("What file do you want to read in? ");
-            filename = checkCSV();
-            file.readInFile(filename);
+            filename = checkCSV(); //runs various checks on CSV file
+            file.readInFile(filename); //reads in CSV file for later use
         }
         System.out.println("Enter maximum queue length that students will join: ");
-        maxQueueLength = checkNegativeNumber();
+        maxQueueLength = checkNegativeNumber(); //checks if number is negative, and returns value if so
         System.out.println("Enter serving time: ");
-        servingTime = checkNumberAboveZero();
+        servingTime = checkNumberAboveZero(); //checks if number is above zero, and returns value if so
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
-        teachersCut = checkIsBoolean();
+        teachersCut = checkIsBoolean(); //checks if value is boolean, and returns value if so
     }
     
+    //checks that "simulation" or "read" has been entered, will return boolean if so
     boolean checkSimulateOrRead(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         boolean value = true;
-        while(correct == false){
+        while(correct == false){ //loop will keep running until valid response
             String tempValue = scan.nextLine();
             if(tempValue.equals("simulate")) {
                 value= true;
@@ -86,15 +61,16 @@ public class cafe
         return value;
     }
     
+    //checks that int value isn't negitive, then returns value if so
     int checkNegativeNumber(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         int value = 0;
-        while(correct == false){
-            String tempValue = scan.nextLine();
-            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               value = Integer.parseInt(tempValue);
-               if (value < 0){
+        while(correct == false){ //loop will keep running until valid response
+            String tempValue = scan.nextLine(); //reads in as string because anything can be read in as an string
+            try { 
+               value = Integer.parseInt(tempValue); //atempts to set int value to the string value
+               if (value < 0){ //checks value isn't negative
                    System.out.println("Please enter a number that isn't negitive");
                }else{
                     correct = true;
@@ -106,15 +82,16 @@ public class cafe
         return value;
     }
     
+    //checks value is positive, if so returns value
     int checkNumberAboveZero(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         int value = 0;
-        while(correct == false){
-            String tempValue = scan.nextLine();
-            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               value = Integer.parseInt(tempValue);
-               if (value < 1){
+        while(correct == false){//loop will keep running until valid response
+            String tempValue = scan.nextLine(); //reads in as string because anything can be read in as an string
+            try { 
+               value = Integer.parseInt(tempValue); //checks value is int
+               if (value < 1){ //checks value is positive
                    System.out.println("Please enter a positive number");
                }else{
                     correct = true;
@@ -126,15 +103,16 @@ public class cafe
         return value;
     }
     
+    //checks value isn't negative, if so returns value
     double checkNegativeDouble(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         double value = 0;
-        while(correct == false){
-            String tempValue = scan.nextLine();
-            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
-               value = Double.parseDouble(tempValue);
-               if (value < 0){
+        while(correct == false){//loop will keep running until valid response
+            String tempValue = scan.nextLine(); //reads in as string because anything can be read in as an string
+            try {
+               value = Double.parseDouble(tempValue); //checks value is double
+               if (value < 0){ //checks value isn't negative
                    System.out.println("Please enter a number that isn't negitive");
                }else{
                     correct = true;
@@ -146,23 +124,24 @@ public class cafe
         return value;
     }
     
+    //checks CSV file is valid, if so returns value
     String checkCSV(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         readIn file = new readIn();
         String value = null;
-        while(correct == false){
+        while(correct == false){ //loop will keep running until valid response
             value = scan.nextLine();
-            boolean fileExists = file.fileExists(value);
-            boolean isCSV = file.fileIsCSV(value);
+            boolean fileExists = file.fileExists(value); //checks file does exist
+            boolean isCSV = file.fileIsCSV(value); //checks file is a CSV file
             
             if(fileExists == false){
                 System.out.println("Please enter valid file name make sure to include '.csv'");
             }else if(isCSV == false){
                 System.out.println("Please enter valid file, this programe only excepts csv formate");
-            }else{
+            }else{ //if the file is a real CSV file, it will read it in to check it
                file.readInFile(value);
-               if(file.checkFormat() == true){
+               if(file.checkFormat() == true){ //checks all ints, and amount of rows is correct
                    correct = true; 
                }else{
                    System.out.println("File doesn't have correct formate: 3600 rows, 2 comumbs, and all ints");
@@ -172,12 +151,13 @@ public class cafe
         return value;
     }
     
+    //checks value is boolean, if so returns value
     boolean checkIsBoolean(){
         Scanner scan = new Scanner(System.in);
         boolean correct = false;
         boolean value = true;
-        while(correct == false){
-            String tempValue = scan.nextLine();
+        while(correct == false){ //loop will keep running until valid response
+            String tempValue = scan.nextLine(); //reads in as string because anything can be read in as an string
             if(tempValue.equals("true"))  {
                 value = true;
                 correct = true;
@@ -191,52 +171,86 @@ public class cafe
         return value;
     }
     
+    //this function decides how many queuers are added every second
     void modelQueue(double amountConstant , queue cafeQueue){
-        int timeBeingServed = 0;
-        
+        int timeBeingServed = 0; //time someone has been being served
         for(int i = 1; i<(3600/*seconds in hour*/); i++){ //does action every second of the hour
-            if(simulate == true){
-                for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //for simulating whos added
-                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); 
+            if(simulate == true){ //if running simulation
+                for(int j = 0; j < queuersAdded(amountConstant, i); j++){ //queuersAdded will calculate how many students to add
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , isStudent()); //adds queuer
                 }
-            }else{
-                
+            }else{ //if reading in CSV file
                 for(int j = 0; j < file.students(i); j++){ //add students
-                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); 
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , true); //adds queuer
                 }
                 for(int j = 0; j < file.teachers(i); j++){ //add teachers
-                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , false); 
+                    cafeQueue.addQueuers(i, maxQueueLength , teachersCut , false); //adds queuer
                 }
             }
-            timeBeingServed++; //keeps track of how long someone is being served
+            timeBeingServed++; //keeps track of how long someone is being served (if equal to timeServed then they'll leave queue)
             timeBeingServed = cafeQueue.servePerson(timeBeingServed); //puts people in 'serving area'
-            cafeQueue.finishServing(i, timeBeingServed, servingTime);
+            cafeQueue.finishServing(i, timeBeingServed, servingTime); //will dequeue people who have been served
         }
     }
     
-    int queuersAdded(double amountConstant, int i){ //figures out how many queuers to add
+    //this code is used for simulating queue, it will calculate queuers added
+    int queuersAdded(double amountConstant, int i){
         double numberJoiningDecimal = 0; //calculated value for people joining queue
         int numberJoining; //amount of whole numbers in initial calculated value
         double chanceJoining; //decimal amount from initial calculated value
         
-        numberJoiningDecimal = (-amountConstant/3600.00000)*i+amountConstant;//This is the amount of people who will join the queue each second
-        numberJoining = (int)numberJoiningDecimal; //finds amount of whole numbers in numberJoiningDecimal
-        chanceJoining = numberJoiningDecimal - numberJoining; //percentage chance another person will join
-  
-        Random rand = new Random(); //finds whether another person is added
-        double n = (rand.nextInt(1000)/1000.00000);
-        if(chanceJoining > n) numberJoining ++; //adds one more person if so
+        /*This equation will output a postive decimal, that decreases with time
+          reaching zero at 3600 seconds */
+        numberJoiningDecimal = (-amountConstant/3600.00000)*i+amountConstant;
+        numberJoining = (int)numberJoiningDecimal; //this amount of whole numbers in decimal 
+        chanceJoining = numberJoiningDecimal - numberJoining; //finds decimal portion of number (chance of someone being added to queue)
+ 
+        //finds whether another person is added based on chance
+        Random rand = new Random(); 
+        double n = (rand.nextInt(1000)/1000.00000); //makes random number between 0 - 1
+        if(chanceJoining > n) numberJoining ++; //adds one more person if chance is higher then random number
         
         return numberJoining;
     }
     
+    //this code is used for simulating queue, it will pick weather a student of teacher is added
     boolean isStudent(){ //finds whether teach or student is added
         Random rand = new Random(); 
-        int n = (rand.nextInt(StudentsPerTeachers))+1;
-        if(n >= StudentsPerTeachers) {
+        int n = (rand.nextInt(StudentsPerTeachers))+1; //generates random number between 1 - studentsPerTeachers
+        if(n >= StudentsPerTeachers) { 
             return false; //is teacher
         } else {   
             return true; // is student
         }
+    }
+    
+    //this will output all the values I want to output when the simulation is run
+    void outputvariables(queue cafeQueue){
+        //hungry people is the amount that didn't join queue because it was too long, and amount left after its been one hour
+        int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLengthPeople(cafeQueue.head , true);
+        System.out.println("Hungry students: " + hungryStudents);
+        int hungryTeachers = cafeQueue.hungryTeachers() + cafeQueue.QueueLengthPeople(cafeQueue.head , false);
+        System.out.println("Hungry teachers: " + hungryTeachers);
+        System.out.println("Served students: " + cafeQueue.notHungryStudents());
+        System.out.println("Served teachers: " + cafeQueue.notHungryTeachers());
+        String averageWaitTimeS = averageWaitTime(cafeQueue.totalWaitTimeStudents() , cafeQueue.notHungryStudents());
+        String averageWaitTimeT = averageWaitTime(cafeQueue.totalWaitTimeTeachers() , cafeQueue.notHungryTeachers());
+        System.out.println("Student average wait time: " + averageWaitTimeS);
+        System.out.println("Teacher average wait time: " + averageWaitTimeT);
+    }
+    
+    //calculates average wait time
+    String averageWaitTime(int totalWaitTime , int notHungryStudents){ //this formats average wait time: mm:ss
+        if (notHungryStudents == 0){ //if no one was served
+            return "No one was served";
+        }
+        int totalSeconds = totalWaitTime / notHungryStudents; //wait time in seconds
+        //formats the wait time, example 6:09 instead of 369s
+        int secondsInt = totalSeconds % 60; //amount of seconds more then amount of minutes in wait time
+        String seconds = String.valueOf(secondsInt); //turn second int into string
+        if (secondsInt < 10) seconds = "0" + seconds; //2 seconds will be shown as 0:02 not 0:2
+        int minutes = (totalSeconds - secondsInt)/60; //find amount of minutes
+        String averageWaitTime = minutes +":"+seconds; //puts minutes and second together
+        return averageWaitTime;
     }
 }
