@@ -12,6 +12,8 @@ public class cafe
     readIn file = new readIn(); //creates new file(class)
     
     public cafe(){
+        System.out.println("This code will run a simualtion of a cafe queue");
+        System.out.println("You can simulate the people being read into the queue, or read in you own numbers");
         queue cafeQueue = new queue(); 
         askVariables();
         modelQueue(amountConstant, cafeQueue);
@@ -23,18 +25,20 @@ public class cafe
         System.out.println("Do you want to simulate or read in the queue");
         simulate = checkSimulateOrRead(); //checks if value is "simulation" or "read", and returns boolean value if so
         if(simulate == true){ //asks for simulation requied variables
-            System.out.println("Enter student constant: ");
+            System.out.println("Enter queuers constant, the higher the student constant the more queuers ");
+            System.out.println("Suggested between 0 to 1 (you can write decimals)");
             amountConstant = checkNegativeDouble(); //checks if number is negative, and returns value if so
             System.out.println("Enter amount of students per one teacher: ");
             StudentsPerTeachers = checkNegativeNumber();  //checks if number is negative, and returns value if so
         }else{ //asks for reading in requied variables
             System.out.println("What file do you want to read in? ");
+            System.out.println("This code reads in CSV files, with 3600 rows (for each second) and two columbs (columb one for students and columb two for teachers)");
             filename = checkCSV(); //runs various checks on CSV file
             file.readInFile(filename); //reads in CSV file for later use
         }
-        System.out.println("Enter maximum queue length that students will join: ");
+        System.out.println("Enter maximum queue length (when the queue has reached that length students will no longer join the queue) ");
         maxQueueLength = checkNegativeNumber(); //checks if number is negative, and returns value if so
-        System.out.println("Enter serving time: ");
+        System.out.println("Enter serving time (in seconds) ");
         servingTime = checkNumberAboveZero(); //checks if number is above zero, and returns value if so
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
         teachersCut = checkIsBoolean(); //checks if value is boolean, and returns value if so
