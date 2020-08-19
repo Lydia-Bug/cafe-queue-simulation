@@ -4,7 +4,7 @@ import java.io.File;
 public class readIn
 {
     final int MAXLINES = 3600;
-    final int VALUESPERLINE = 3;
+    final int VALUESPERLINE = 2;
     String AllLinesAllElements[][] = new String[MAXLINES][VALUESPERLINE];
     public readIn(){
         
@@ -38,7 +38,6 @@ public class readIn
             System.out.println(AllLinesAllElements[i][2]);
         }
         */
-        System.out.println("he");
     }
     boolean fileExists(String filename){
         File thefile = new File(filename);
@@ -58,10 +57,19 @@ public class readIn
         }
     }
     int students(int i){
-        return Integer.parseInt(AllLinesAllElements[i][1]);
+        return Integer.parseInt(AllLinesAllElements[i][0]);
     }
     int teachers(int i){
-        return Integer.parseInt(AllLinesAllElements[i][2]);
+        return Integer.parseInt(AllLinesAllElements[i][1]);
     }
-    
+    /*
+    boolean checkFormat(){
+        for(int i = 1; i<(3600); i++){
+            try { //used to make sure number entered is number (if I don't use try then I'll get an error when I try to change a string into an int
+               
+            }catch (NumberFormatException e){
+                
+            }
+        }
+    }*/
 }

@@ -154,6 +154,8 @@ public class cafe
             value = scan.nextLine();
             boolean fileExists = file.fileExists(value);
             boolean isCSV = file.fileIsCSV(value);
+            
+            
             if(fileExists == false){
                 System.out.println("Please enter valid file name make sure to include '.csv'");
             }else if(isCSV == false){
