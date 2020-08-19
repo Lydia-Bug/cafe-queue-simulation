@@ -213,6 +213,7 @@ public class cafe
     //this code is used for simulating queue, it will pick weather a student of teacher is added
     boolean isStudent(){ //finds whether teach or student is added
         Random rand = new Random(); 
+        if(StudentsPerTeachers == 0) return false; //if there is no students per teacher, teacher is added
         int n = (rand.nextInt(StudentsPerTeachers))+1; //generates random number between 1 - studentsPerTeachers
         if(n >= StudentsPerTeachers) { 
             return false; //is teacher
