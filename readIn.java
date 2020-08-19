@@ -38,7 +38,7 @@ public class readIn
             System.out.println(AllLinesAllElements[i][2]);
         }
         */
-        
+        System.out.println("he");
     }
     boolean fileExists(String filename){
         File thefile = new File(filename);
