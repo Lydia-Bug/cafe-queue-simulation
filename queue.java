@@ -1,3 +1,4 @@
+//adds, serves, and dequeues people
 import java.util.Random;
 public class queue
 {

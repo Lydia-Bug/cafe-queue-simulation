@@ -1,4 +1,4 @@
-
+//asks for an outputs variables, also caculates how many people added
 import java.util.*;
 public class cafe
 {
