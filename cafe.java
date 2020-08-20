@@ -80,11 +80,17 @@ public class cafe
             }
         }
         
-        System.out.println("Enter maximum queue length that students will join: ");
         correct = false;
-            while(correct == false){
+        while(correct == false){
+            System.out.println("Enter maximum queue length that students will join: ");
+            maxQueueLength = scan.nextInt();
+            if(maxQueueLength > -1){
+                correct = true;
+            }else{
+                System.out.println("That queue length is too small, it needs to be more then 1 long");
             }
-        maxQueueLength = scan.nextInt();
+        }
+        
         System.out.println("Enter serving time: ");
         servingTime = scan.nextInt();
         System.out.println("Can teachers cut to front of queue? (true if yes)" );
