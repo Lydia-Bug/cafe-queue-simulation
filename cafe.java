@@ -14,6 +14,7 @@ public class cafe
     public cafe(){
         System.out.println("This code will run a simualtion of a cafe queue");
         System.out.println("You can simulate the people being read into the queue, or read in you own numbers");
+        System.out.println("");
         queue cafeQueue = new queue(); 
         askVariables();
         modelQueue(amountConstant, cafeQueue);
@@ -22,11 +23,12 @@ public class cafe
     
     //asks user to enter all values for variables
     void askVariables(){
-        System.out.println("Do you want to simulate or read in the queue");
+        System.out.println("Do you want to simulate the queue or read it in from a file?");
+        System.out.println("Type either simulate or read");
         simulate = checkSimulateOrRead(); //checks if value is "simulation" or "read", and returns boolean value if so
         if(simulate == true){ //asks for simulation requied variables
             System.out.println("Enter queuers constant, the higher the student constant the more queuers ");
-            System.out.println("Suggested between 0 to 1 (you can write decimals)");
+            System.out.println("Suggested between 1 to 100 (can be higher then 100)");
             amountConstant = checkNegativeDouble(); //checks if number is negative, and returns value if so
             System.out.println("Enter amount of students per one teacher: ");
             StudentsPerTeachers = checkNegativeNumber();  //checks if number is negative, and returns value if so
@@ -125,6 +127,8 @@ public class cafe
                 System.out.println("Please enter a number");
             }
         }
+        //my calculation returns 'expected' results when the student constant is less then 1, but this is a bit confusing and arbitrary for the user, so I ask them to enter a higher number, then I make it smaller
+        value = value/100; 
         return value;
     }
     
@@ -224,6 +228,8 @@ public class cafe
     
     //this will output all the values I want to output when the simulation is run
     void outputvariables(queue cafeQueue){
+        System.out.println("");
+        System.out.println("------------------------");
         //hungry people is the amount that didn't join queue because it was too long, and amount left after its been one hour
         int hungryStudents = cafeQueue.hungryStudents() + cafeQueue.QueueLengthPeople(cafeQueue.head , true);
         System.out.println("Hungry students: " + hungryStudents);
