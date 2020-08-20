@@ -1,4 +1,8 @@
-//stores values for person in queue
+/*
+ * Made by: Lydia Acton
+ * Last updated: 20/08/20
+ * This class stores values for a person in queue
+ */
 public class person
 {
   private person follower; //variable for person following person

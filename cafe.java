@@ -1,4 +1,10 @@
-//asks for an outputs variables, also caculates how many people added
+/*
+ * Made by: Lydia Acton
+ * Last updated: 20/08/20
+ * This is the main class that will simulate a cafe queue, to see the effect of various things
+ * This class asks for the variable inputs, outputs the result of the simulation,
+ * and will say how many people to be queued every second
+ */
 import java.util.*;
 public class cafe
 {

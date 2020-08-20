@@ -1,4 +1,8 @@
-//class for reading in CSV files
+/*
+ * Made by: Lydia Acton
+ * Last updated: 20/08/20
+ * This class is for reading in  CSV files, and checking that they are valid
+ */
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.File;

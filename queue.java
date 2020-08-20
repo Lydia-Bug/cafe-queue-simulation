@@ -1,4 +1,9 @@
-//adds, serves, and dequeues people
+/*
+ * Made by: Lydia Acton
+ * Last updated: 20/08/20
+ * This class does everything to do with the queue, it queues people, 
+ * serves people, and dequeues people
+ */
 import java.util.Random;
 public class queue
 {
